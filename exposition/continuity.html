@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>The Scribble Board - Continuity</title>
+  <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEnvironments: true
+            },
+        };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css"/>
+  <link rel="stylesheet" href="./Continuity/continuity.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<script src="../navigation.js"></script>
+<script src="./Continuity/continuity.js"></script>
+<div class="topnav" id="myTopnav">
+  <a href="../index.html">Home</a>
+  <a href="../fun.html">Fun proofs</a>
+  <a href="../exposition.html" class="active">Exposition</a>
+  <a href="../about.html">About</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+<button class="theme-toggle" id="themeToggle" onclick="switchThemes()">☀️ Light</button>
+<div class="main-content">
+  <nav class="navigation">
+    <h4>Contents</h4>
+    <ul>
+      <li><a href="#motivation">Motivation</a></li>
+      <li><a href="#a-deeper-look">A Deeper Look</a></li>
+      <li><a href="#continuity">Continuity</a></li>
+      <li><a href="#extensions">Extensions</a></li>
+      <li><a href="#recap">Recap</a></li>
+      <li><a href="#up-next">Up Next</a></li>
+    </ul>
+  </nav>
+    <div class="container">
+    <h1>Continuity</h1>
+      <h2 class='unnumbered' id='motivation'>Motivation</h2>
+      <p>So, we’ve just discovered functions. A natural question is to wonder
+      if we can classify these mathematical objects in some (useful) way.
+      Since, at this stage, we do not really know much about functions, let us
+      begin by looking at some examples of functions. Perhaps this will
+      highlight some special property that only a few functions seem to have,
+      which we can then use to classify functions. To keep things simple, let
+      us restrict ourselves to functions from \([0, 1]\) to \([0, 1]\). This will let us draw the complete graphs of the functions.</p>
+      <div class="canvas-container">
+                <div class="canvas-header">
+                    <h4>Graphs of some functions</h4>
+                    <button id="resetCanvas" class="reset-btn">Reset Canvas</button>
+                </div>
+                <div class="canvas-wrapper">
+                    <div class="canvas-labels">
+                        <div class="y-label">1</div>
+                        <div class="x-label x-label-0">0</div>
+                        <div class="x-label x-label-1">1</div>
+                    </div>
+                    <canvas id="drawingCanvas" width="400" height="400"></canvas>
+                </div>
+                <div class="canvas-instructions">
+                    <p><strong>Instructions:</strong> Click and drag to sketch function graphs on the canvas above. Some example functions to sketch:
+                    <ul style='list-style: none'>
+                      <li>\(f_1(x)=x\)</li>
+                      <li>\(f_2(x)=x^2\)</li>
+                      <li>\(f_3(x)=\begin{cases}
+                        x &amp;\colon 0\leq x\leq 0.5\\
+                        x-0.5 &amp; \colon 0.5&lt;x \leq 1
+                        \end{cases}\)
+                      </li>
+                    </ul></p>
+                </div>
+      </div>
+      <p>Now, some of these graphs can be drawn without releasing the pen
+      tool, while others require it to be released at some point. So this
+      notion of <em>‘not needing to lift the pen’</em> is satisfied by only by
+      some functions, and seems to be a good starting point to classify
+      functions.</p>
+      <div id="candidate0" class="classification">
+        <p><strong>Candidate classification 1.</strong> A function \(f \colon [0, 1] \to [0, 1]\) is <em>single
+        stroke graphable</em> if its graph can be drawn on a sheet of paper
+        without lifting the pen (assuming that we use only one pen).</p>
+        <p>The function \(f\) is
+        <em>not single stroke graphable</em> if its graph requires us to lift
+        the pen at least once (again, assuming we use only one pen).</p>
+      </div>
+      <p>An immediate issue with this classification is that this requires us
+      to draw the graphs on a sheet of paper. However, we may not be able to
+      draw the graphs of some functions with a pen, and consequently, cannot
+      apply this classification to such functions. Consider, for instance, the
+      function
+      \(f_1 \colon [0, 1] \to [0, 1]\)
+      defined as: <div>\[f_1 = \begin{cases}
+        1 &amp; \colon \text{ if } x \text{ is rational}\\
+        0 &amp; \colon \text{ otherwise}
+      \end{cases}\]</div></p>
+      <p>So, we now look for a better classification, one that we can apply to
+      <em>all</em> functions, and not just functions that can be graphed.
+      Perhaps we can capture the essence of this notion and express that in
+      precise mathematical language which can then be applied to all
+      functions.</p>
+      <h2 class="unnumbered" id="a-deeper-look">A Deeper Look</h2>
+      <p>Before we begin studying the behaviour of single stroke graphable
+      functions, it helps to establish some terminology.</p>
+      <h3 class="unnumbered" id="some-helpful-terminology">Some helpful
+      terminology</h3>
+      <div class="definition">
+        <p><strong>Definition 1.</strong> A function \(f\colon [0, 1] \to [0, 1]\) is
+        <em>graphable</em> if we can draw its graph on a sheet of paper using a
+        pen.</p>
+      </div>
+      <p>We can now use <a href="#candidate0" data-reference-type="ref+label"
+      data-reference="candidate0" class='autoref-link'>Classification 1</a> to classify graphable functions as it
+      applies to all graphable functions.</p>
+      <div class="definition">
+        <p><strong>Definition 2.</strong> Fix \(x \in [0, 1]\) and \(\delta \in \mathbb{R}_{&gt;0}\). A <em>neighbourhood</em> \(N(x,\delta)\) is the set of all points that are less than \(\delta\) distance away from \(x\). So a neighbourhood of \(x\) in
+        \([0, 1]\) is the set \(N(x, \delta) = \{y \in [0, 1] \mid |y − x| &lt; \delta\}\).</p>
+      </div>
+      <div class="definition">
+        <p><strong>Definition 3.</strong>Let \(f \colon [0, 1] \to [0, 1]\) be a graphable
+        function. Any point \(x_0 \in [0, 1]\) such that the graph \(y=f(x)\) requires us to lift the pen at \(x=x_0\) is a \emph{jump}.
+        </p>
+      </div>
+      <p>This means any graphable function that does not have a jump is single
+      stroke graphable. Equivalently, any non single stroke graphable function
+      has at least one jump.</p>
+      <h3 class="unnumbered" id="what-happens-at-a-jump">What happens at a
+      jump</h3>
+      <p>Let us now study what happens at a jump and hopefully gain some
+      insight into how we can express that in mathematical language. We look
+      at prototype non single stroke graphable functions with exactly one jump
+      at \(x=0.5\). To construct such prototypes, we begin with a single stroke graphable function and 'push' or 'pull' the graph beyond \(x=0.5\) to create a non single stroke graphable function.</p>
+      <div class="canvas-container">
+                <div class="canvas-header">
+                    <h4>Studying gaps</h4>
+                </div>
+                <button id="x" class="reset-btn">\(y=x\)</button>
+                <button id="x2" class="reset-btn">\(y=x^2\)</button>
+                <button id="sinx" class="reset-btn">\(y=\frac{1+\sin(2 \pi x)}{2}\)</button>
+                <br/>
+                <div class="canvas-wrapper">
+                    <div class="canvas-labels">
+                        <div class="y-label y-label-1">1</div>
+                        <div class="x-label x-label-0">0</div>
+                        <div class="x-label x-label-1">1</div>
+                    </div>
+                    <canvas id="curvesCanvas" width="400" height="400"></canvas>
+                </div>
+                <div class="slider-container">
+                    <label for="curveSlider">Jump distance: <span id="sliderValue">0</span></label>
+                    <input type="range" id="curveSlider" min="-1" max="1" step="0.01" value="0">
+                </div>
+                <div class="canvas-instructions">
+                    <p><strong>Instructions:</strong> Move the slider and experiment with different values of the jump distance. Notice how the functions are non single stroke graphable whenever the jump is non zero, and single stroke graphable whenever it is zero.</p>
+                </div>
+      </div>
+      <p>Notice how there is always a ‘gap’ at \(x=0.5\). In fact, it is precisely because of this ‘gap' that we are required to lift the pen at \(x=0.5\) when drawing the graph. So such ‘gaps' are not just artefacts of the way we are representing non single stroke graphable functions, but are defining features of such functions.</p>
+
+      <p>
+      Our goal now is to attempt to capture the idea of such ‘gaps' in precise mathematical language that can then be extended to non graphable functions as well. So what happens at these ‘gaps'? We study what happens in the neighbourhoods of \(x=0.5\). Fix a neighbourhood \(N(0.5,\delta)\). Now, because we constructed the non single stroke graphable function \(f\) by creating a jump at \(x=0.5\), there will always be some \(x \in N(0.5,\delta)\) such that \(f(x)\) and \(f(0.5)\) are at least the ‘gap distance' apart. In fact, if we choose any \(\epsilon \in \mathbb{R}_{&gt; 0}\) such that \(\epsilon\) is less than this jump distance, there will be some point \(x \in N(0.5,\delta)\) such that \(f(x)\) and \(f(0.5)\) are at least \(\epsilon\) distance apart.</p>
+      <p>
+        Now, this is true for all neighbourhoods of \(x=0.5\) because \(f\) was constructed by pushing its immediate neighbours away by the jump distance.
+      </p>
+<p>
+Worded differently, this means: There is \(\epsilon \in \mathbb{R}_{>0}\) such that for any neighbourhood \(N(0.5,\delta)\), there is \(x \in N(0.5,\delta)\) such that \(|f(x)-f(0.5)| \geq \epsilon\).
+</p><p>
+Notice that there is nothing special about \(0.5\), so we can extend the above idea to any jump of a non single stroke graphable function.
+</p><p>
+This is the property of jumps we were looking for!
+</p><p>
+Now, for any non single stroke graphable function \(f \colon [0,1] \to [0,1]\) there is at least one jump. This means there is at least one point \(x_0 \in [0,1]\) such that there is some \(\epsilon \in \mathbb{R}_{>0}\) for which any neighbourhood \(N(x_0,\delta)\) has a point \(p \in N(x_0,\delta)\) such that \(|f(p)-f(x_0)| \geq \epsilon\).
+</p><p>
+We can now negate the above to get:
+</p><p>
+For any single stroke graphable function \(f \colon [0,1] \to [0,1]\), there is no jump.
+This means for all points \(x_0 \in [0,1]\) there is no \(\epsilon \in \mathbb{R}_{>0}\) for which any neighbourhood \(N(x_0,\delta)\) has a point \(p \in N(x_0,\delta)\) such that \(|f(p)-f(x_0)| \geq \epsilon\).
+</p>
+<p>
+That \(\dots\) is a mess to get through, so let us attempt to simplify it. Let \(P\) be the property: ‘There is some \(\epsilon \in \mathbb{R}_{>0}\) for which any neighbourhood \(N(x_0,\delta)\) has a point \(p \in N(x_0,\delta)\) such that \(|f(p)-f(x_0)| \geq \epsilon\)'. This lets us say that for any single stroke graphable function \(f \colon [0,1] \to [0,1]\), there is no point \(x_0 \in [0,1]\) such that \(P\) is true.
+</p><p>
+Equivalently, for any single stroke graphable function \(f \colon [0,1] \to [0,1]\), at each \(x_0 \in [0,1]\), \(P\) is false.
+</p><p>
+Now, the negation of \(P\) is: ‘For every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)\) with no point \(p \in N(x_0,\delta_0)\) such that \(|f(p)-f(x_0)| \geq \epsilon\)'. This means, for every  \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)\) such that \(|f(x)-F(x_0)|&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).
+</p><p>
+Using this, we get that for any single stroke graphable function \(f \colon [0,1] \to [0,1]\), at each \(x_0 \in [0,1]\), for every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)\), such that \(|f(x)-f(x_0)|&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).
+      <h2 class="unnumbered" id="continuity">Continuity</h2>
+      <p>The results in the previous section give us a way to classify all
+      functions, for the ideas of distances and neighbourhoods do not require a graph. So we can
+      apply them to functions that are not graphable as well.</p>
+      <div class="definition">
+        <p><strong>Definition 4 (Continuity at a point).</strong> Let \(f \colon [0,1] \to [0,1]\) be a function and \(x_0 \in [0,1]\). The function \(f\) is <em>continuous at \(x_0\)</em> if, for every \(\epsilon \in \mathbb{R}_{&gt;0}\), there is a neighbourhood \(N(x_0,\delta_0)\), such that \(|f(x)-f(x_0)|&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).
+      </div>
+      <div id="candidate1" class="classification">
+        <p><strong>Candidate classification 2.</strong> A function \(f \colon [0, 1] \to [0, 1]\) is
+        <em>continuous</em> if it is continuous at each point \(x_0 \in [0,1]\).</p>
+        <p>The function \(f\) is
+        <em>discontinuous</em> if it is not continuous.</p>
+      </div>
+      <p>Note that this classification only uses the fact that \(f\) is a well defined function, and
+      does not depend on whether \(f\)
+      is graphable. Note also that if \(f\) were to be graphable, the
+      definitions for continuous functions and single stroke graphable
+      functions coincide.</p>
+      <p>So there we have it! A classification that we can extend to all
+      functions from \([0, 1]\) to \([0,1]\). It is obvious from the way we arrived
+      at this definition for continuity that a function is continuous if and
+      only if a tiny ‘wiggle’ in the input does not result in a sudden ‘jump’
+      in the function’s output. Over the years, we have found that preserving
+      this idea of tiny wiggles in the input not resulting in jumps in the
+      output turns out to be useful in several (real world) contexts. So we
+      use <a href="#candidate1" data-reference-type="ref+label"
+      data-reference="continuity" class='autoref-link'>Classification 2</a> to classify functions as continuous
+      and discontinuous ones.</p>
+      <h2 class="unnumbered" id="extensions">Extensions</h2>
+      <p>Using closed intervals let us draw the complete graphs of the functions, but the definition of continuity in <a href="#candidate1"
+      data-reference-type="ref+label" data-reference="candidate1" class='autoref-link'>Classification 2</a> does
+      not need graphs anyway! So let us do away with
+      that restriction and apply this definition to functions from \(\mathbb{R}\) to \(\mathbb{R}\).</p>
+      <div class="definition">
+        <p><strong>Definition 5 (Continuity on the real line).</strong> (Continuity on the real line). Let \(f \colon \mathbb{R} \to \mathbb{R}\) be a function and \(x_0 \in \mathbb{R}\). The function \(f\) is <em>continuous at \(x_0\)</em> if, for every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)=\{y \in \mathbb{R} \mid |y-x| &lt; \delta\}\), such that \(|f(x)-f(x_0)|&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).</p>
+<p>
+    A function \(f \colon \mathbb{R} \to \mathbb{R}\) is <em>continuous</em> if it is continuous at each point \(x_0 \in \mathbb{R}\).</p>
+      </div>
+      <p>Upon some reflection, we see that the notion of continuity is still
+      well defined.</p>
+      <p>In fact, we can take this further. Notice that all we needed to
+      define neighbourhoods and jumps is some notion of distance between two
+      points of the set. We call any such set \(S\) that comes equipped with a
+      distance function \(d_S \colon S \times S \to \mathbb{R}\) a <em>metric space</em> (this means the function \(d_S\) satisfies some axioms, but we shall not get into that here. For our purposes, we assume that \(d_S\) is a valid notion of distance.) We simply replace \(d_S\) in place of the distance function on \(\mathbb{R}\) to get an extension of continuity to metric spaces.</p>
+      <div class="definition">
+        <p><strong>Definition 6 (Continuity in metric spaces).</strong> Suppose \((S,d_S)\) is a metric space. Let \(f \colon S \to S\) be a function and \(x_0 \in S\). The function \(f\) is <em>continuous at \(x_0\)</em> if, for every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)=\{y \in \mathbb{R} \mid d_S(y,x) &lt; \delta\}\), such that \(d_S(f(x),f(x_0))&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).</p>
+<p>
+    A function \(f \colon S \to S\) is <em>continuous</em> if it is continuous at each point \(x_0 \in S\).</p>
+      </div>
+      <p>There’s no special reason for the two metric spaces in the above to
+      be the same, so we can remove that restriction as well!</p>
+      <div class="definition">
+        <p><strong>Definition 7.</strong> Suppose \((S,d_S)\) and \((T,d_T)\) are two metric spaces. Let \(f \colon S \to T\) be a function and \(x_0 \in S\). The function \(f\) is <em>continuous at \(x_0\)</em> if, for every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)=\{y \in \mathbb{R} \mid d_S(y,x) &lt; \delta\}\), such that \(d_T(f(x),f(x_0))&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).</p>
+<p>
+    A function \(f \colon S \to T\) is <em>continuous</em> if it is continuous at each point \(x_0 \in S\).</p>
+      </div>
+      <h2 class="unnumbered" id="recap">Recap</h2>
+      <p>We started with a definition of continuity that was only applicable
+      to graphable functions from \([0, 1]\) to
+      \([0, 1]\) (<a href="#candidate0"
+      data-reference-type="ref+label" data-reference="candidate0" class='autoref-link'>Classification 1</a>),
+      observed that what really mattered was a lack of ‘jumps’, which let us
+      extend the definition to all functions from \([0, 1]\) to
+      \([0, 1]\) (<a href="#candidate1"
+      data-reference-type="ref+label" data-reference="candidate1" class='autoref-link'>Classification 2</a>). This
+      extension did not depend on the intervals being closed, so it applied to
+      all functions from \(\mathbb{R}\) to \(\mathbb{R}\) as well. Not just that, this definition
+      only required a well defined concept of distance, so we were able to
+      extend it further to functions between any two metric spaces!</p>
+      <h2 class="unnumbered" id="up-next">Up next</h2>
+      <p>We can continue this process of generalising continuity. It turns out
+      that a notion of distance is not essential to have a well defined
+      idea of continuity. What we need is an idea of ‘open sets’ being
+      preserved in some way, which leads to the study of point-set
+      topology.</p>
+      <h3>Corrections:</h3>
+      <p>None yet, <a href="mailto:mailthescribbleboard@gmail.com" class="autoref-link">let me know</a> if you spot any mistake!</p>
+    </div>
+  </div>
+  <footer>
+    <p>Want to be notified of new posts? Sign up <a href="https://forms.gle/WzB1BgRED3sANbUv6" class="autoref-link">here</a>!</p>
+    <p>This article is published under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" class='autoref-link'>Creative Commons Attribution-NonCommercial 4.0 International</a> license.</p>
+  </footer>
+</body>
+</html>
