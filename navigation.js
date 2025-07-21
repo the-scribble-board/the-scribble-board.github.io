@@ -1,6 +1,8 @@
 window.addEventListener('scroll', () => {
     const anchors = document.querySelectorAll('h2');
     const links = document.querySelectorAll('.navigation a');
+    const pageProgressBar = document.querySelector(".progress-bar")
+
     if (typeof(anchors) != 'undefined' && anchors != null && typeof(links) != 'undefined' && links != null) {
         let scrollTop = window.scrollY;
     
@@ -17,6 +19,9 @@ window.addEventListener('scroll', () => {
             }
         }
     }
+
+    var scrolledPercentage = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight))*100;
+    pageProgressBar.style.width = `${scrolledPercentage}%`;
 });
 
 function myFunction() {

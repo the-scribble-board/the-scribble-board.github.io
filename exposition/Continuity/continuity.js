@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initCanvas() {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary');
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim();
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border-color');
         ctx.lineWidth = 1;
 
         for (let x = canvas.width / 10; x <= canvas.width; x += canvas.width / 10) {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.stroke();
         }
 
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
         ctx.lineWidth = 2;
 
         ctx.beginPath();
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var currentX = (e.clientX - rect.left)*scaleX;
         var currentY = (e.clientY - rect.top)*scaleY;
 
-        ctx.strokeStyle = 'rgb(0,150,136)';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary');
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const button0=document.getElementById('x');
     const button1=document.getElementById('x2');
     const button2=document.getElementById('sinx');
+    const button3=document.getElementById('quarter-circle');
 
     const ctx = canvas.getContext('2d');
     let jump = 0;
@@ -172,8 +173,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function f2(x){
         return (1+Math.sin(2* Math.PI * x))/2;
     }
+    function f3(x){
+        return (Math.sqrt(1-(Math.pow(x,2))));
+    }
 
-    const prototypes=[f,f1,f2];
+    const prototypes=[f,f1,f2,f3];
     var choice=0;
 
     button0.addEventListener('click',function(){
@@ -188,12 +192,16 @@ document.addEventListener('DOMContentLoaded', function() {
         choice=2;
         drawCurves();
     });
+    button3.addEventListener('click', function(){
+        choice=3;
+        drawCurves();
+    });
 
     function init() {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary');
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim();
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border-color');
         ctx.lineWidth = 1;
         
         for (let x = canvas.width / 10; x <= canvas.width; x += canvas.width / 10) {
@@ -210,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.stroke();
         }
         
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
         ctx.lineWidth = 2;
         
         ctx.beginPath();
@@ -231,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var height = canvas.height;
         const discontinuity = width*0.5;
 
-        ctx.strokeStyle = 'rgb(0,150,136)';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary');
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(0,(height*(1-prototypes[choice](0))));
@@ -244,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         ctx.stroke();
         
-        ctx.strokeStyle = 'rgb(0,150,136)';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary');
         ctx.lineWidth = 3;
         ctx.beginPath();
         
@@ -260,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = 'rgb(233,30,99)';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-example');
         ctx.lineWidth = 2;
         ctx.setLineDash([5, 5]);
         ctx.beginPath();
