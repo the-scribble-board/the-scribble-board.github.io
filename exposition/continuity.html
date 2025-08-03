@@ -51,12 +51,12 @@
       <li><a href="#continuity">Continuity</a></li>
       <li><a href="#extensions">Extensions</a></li>
       <li><a href="#recap">Recap</a></li>
-      <li><a href="#up-next">Up Next</a></li>
+      <li><a href="#further-study">Further Study</a></li>
     </ul>
   </nav>
     <div class="container">
     <h1>Continuity</h1>
-      <p>This article assumes familiarity with the ideas of real valued functions defined on the real line and distances between real numbers at an advanced high school or early undergraduate level. It is aimed at a student who has just been introduced to the \(\epsilon - \delta\) definition of continuity and is intended to help provide motivation for it. It is my entry for SoME4, held in 2025.</p>
+      <p>This article assumes familiarity with the ideas of real valued functions defined on the real line and distances between real numbers at a late high school or early undergraduate level. It is aimed at a student who has just been introduced to the \(\epsilon - \delta\) definition of continuity and is intended to help provide motivation for it. It is my entry for SoME4, held in 2025.</p>
       <h2 class='unnumbered' id='motivation'>Motivation</h2>
       <p>So, we’ve just discovered functions. A natural question is to wonder
       if we can classify these mathematical objects in some (useful) way.
@@ -129,8 +129,8 @@
         <em>graphable</em> if we can draw its complete graph on a sheet of paper using a
         pen.</p>
       </div>
-      <p>We can now use <a href="#candidate0" data-reference-type="ref+label"
-      data-reference="candidate0" class='autoref-link'>Classification 1</a> to classify graphable functions as it
+      <p>While this definition is not rigorous, we will nevertheless use it as a handhold in our study of single stroke graphable functions.</p>
+      <p>We can now use <a href="#candidate0">Classification 1</a> to classify graphable functions as it
       applies to all graphable functions.</p>
       <div class="definition">
         <p><strong>Definition 2.</strong> Fix \(x \in [0, 1]\) and \(\delta \in \mathbb{R}_{&gt;0}\). A <em>neighbourhood</em> \(N(x,\delta)\) is the set of all points that are less than \(\delta\) distance away from \(x\). So a neighbourhood of \(x\) in
@@ -220,22 +220,29 @@ Using this, we get that for any single stroke graphable function \(f \colon [0,1
       is graphable. Note also that if \(f\) were to be graphable, the
       definitions for continuous functions and single stroke graphable
       functions coincide.</p>
-      <h3 id="a-word-of-caution">A word of caution</h3>
-      <p>It is only when \(f\) is graphable that the definitions for continuous functions and single stroke graphable
-      functions coincide. It is not true in general that a function \(f\) is continuous if and only if its graph has no jumps.</p>
-      <p>The function \(f =\sin (\frac{1}{x})\), for instance, is discontinuous and does not have any jumps. It is not graphable since it oscillates too much near \(x=0\). One views <a href="#candidate0">Classification 1</a> and <a href="#candidate1">Classification 2</a> as independent definitions that when restricted to graphable functions, happen to have the same effect.</p>
+      <div class="canvas-container" id="a-word-of-caution">
+        <div class="canvas-header">
+          <h4>A word of caution</h4>
+        </div>
+        <p>
+          It is only when \(f\) is graphable that \(f\) is continuous if and only if \(f\) is single stroke graphable (i.e. its graph has no jumps). It is not true in general that a function \(f\) is continuous if and only if its graph has no jumps.
+        </p>
+        <p>
+          Consider the function \(f(x) = \begin{cases}
+          \sin(\frac{1}{x}) &amp; x \in (0,1]\\
+          0 &amp; x=0 \end{cases}\), defined on the domain [0,1]. It is not continuous and has no jumps. It is not graphable since it oscillates too much near \(x=0\).
+        </p>
+      </div>
       <p>So there we have it! A classification that we can extend to all
       functions from \([0, 1]\) to \([0,1]\). One is encouraged to see how this means that a function is continuous if and
       only if a tiny ‘wiggle’ in the input does not result in a sudden ‘jump’
       in the function’s output. Over the years, we have found that preserving
       this idea of tiny wiggles in the input not resulting in jumps in the
       output turns out to be useful in several (real world) contexts. So we
-      use <a href="#candidate1" data-reference-type="ref+label"
-      data-reference="continuity" class='autoref-link'>Classification 2</a> to classify functions as continuous
+      use <a href="#candidate1">Classification 2</a> to classify functions as continuous
       and discontinuous ones.</p>
       <h2 class="unnumbered" id="extensions">Extensions</h2>
-      <p>Using closed intervals let us draw the complete graphs of the functions, but the definition of continuity in <a href="#candidate1"
-      data-reference-type="ref+label" data-reference="candidate1" class='autoref-link'>Classification 2</a> does
+      <p>Using closed intervals let us draw the complete graphs of the functions, but the definition of continuity in <a href="#candidate1">Classification 2</a> does
       not need graphs anyway! So let us do away with
       that restriction and apply this definition to functions from \(\mathbb{R}\) to \(\mathbb{R}\).</p>
       <div class="definition">
@@ -264,29 +271,31 @@ Using this, we get that for any single stroke graphable function \(f \colon [0,1
       <h2 class="unnumbered" id="recap">Recap</h2>
       <p>We started with a definition of continuity that was only applicable
       to graphable functions from \([0, 1]\) to
-      \([0, 1]\) (<a href="#candidate0"
-      data-reference-type="ref+label" data-reference="candidate0" class='autoref-link'>Classification 1</a>),
+      \([0, 1]\) (<a href="#candidate0">Classification 1</a>),
       observed that what really mattered was a lack of ‘jumps’, which let us
       extend the definition to all functions from \([0, 1]\) to
-      \([0, 1]\) (<a href="#candidate1"
-      data-reference-type="ref+label" data-reference="candidate1" class='autoref-link'>Classification 2</a>). This
+      \([0, 1]\) (<a href="#candidate1">Classification 2</a>). This
       extension did not depend on the intervals being closed, so it applied to
       all functions from \(\mathbb{R}\) to \(\mathbb{R}\) as well. Not just that, this definition
       only required a well defined concept of distance, so we were able to
       extend it further to functions between any two metric spaces!</p>
-      <h2 class="unnumbered" id="up-next">Up next</h2>
+      <h2 class="unnumbered" id="further-study">Further Study</h2>
       <p>We can continue this process of generalising continuity. It turns out
       that a notion of distance is not essential to have a well defined
       idea of continuity. What we need is an idea of ‘open sets’ being
       preserved in some way, which leads to the study of point-set
       topology.</p>
       <h3>Corrections:</h3>
-      <p>None yet, <a href="mailto:mailthescribbleboard@gmail.com" class="autoref-link">let me know</a> if you spot any mistake!</p>
+      <p>
+        <ul>
+          <li>The function \(f(x)=\sin(\frac{1}{x})\) was used as an example <a href="#a-word-of-caution">here</a>. It is, however, not defined at \(x=0\). This is now fixed. Thanks anonymous reader letting me know.</li>
+        </ul>
+        Found a mistake? <a href="mailto:mailthescribbleboard@gmail.com">Let me know</a>!</p>
     </div>
   </div>
   <footer>
-    <p>Want to be notified of new posts? Sign up <a href="https://forms.gle/WzB1BgRED3sANbUv6" class="autoref-link">here</a>!</p>
-    <p>This article is published under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" class='autoref-link'>Creative Commons Attribution-NonCommercial 4.0 International</a> license.</p>
+    <p>Want to be notified of new posts? Sign up <a href="https://forms.gle/WzB1BgRED3sANbUv6">here</a>!</p>
+    <p>This article is published under a <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International</a> license.</p>
   </footer>
 </body>
 </html>
