@@ -56,7 +56,7 @@
   </nav>
     <div class="container">
     <h1>Continuity</h1>
-      <p>This article assumes familiarity with the ideas of real valued functions defined on the real line and distances between real numbers at a late high school or early undergraduate level. It is aimed at a student who has just been introduced to the \(\epsilon - \delta\) definition of continuity and is intended to help provide motivation for it. It is my entry for SoME4, held in 2025.</p>
+      <p>This article assumes familiarity with the ideas of real valued functions defined on the real line and distances between real numbers at a late high school or early undergraduate level. It is aimed at a student who has just been introduced to the \(\epsilon - \delta\) definition of continuity and is intended to help provide motivation for it. When I first encountered this definition, I was encouraged to generalise it further, as much as I can. I quite enjoyed that feeling, and so I have attempted to share a taste of the same feeling with this article. This is my entry for SoME4, held in 2025.</p>
       <h2 class='unnumbered' id='motivation'>Motivation</h2>
       <p>So, we’ve just discovered functions. A natural question is to wonder
       if we can classify these mathematical objects in some (useful) way.
@@ -137,7 +137,7 @@
         \([0, 1]\) is the set \(N(x, \delta) = \{y \in [0, 1] \mid |y − x| &lt; \delta\}\).</p>
       </div>
       <div class="definition">
-        <p><strong>Definition 3.</strong>Let \(f \colon [0, 1] \to [0, 1]\) be a graphable
+        <p><strong>Definition 3.</strong> Let \(f \colon [0, 1] \to [0, 1]\) be a graphable
         function. Any point \(x_0 \in [0, 1]\) such that the graph \(y=f(x)\) requires us to lift the pen at \(x=x_0\) is a <em>jump</em>.
         </p>
       </div>
@@ -255,7 +255,7 @@ Using this, we get that for any single stroke graphable function \(f \colon [0,1
       <p>In fact, we can take this further. Notice that all we needed to
       define neighbourhoods and jumps is some notion of distance between two
       points of the set. We call any such set \(S\) that comes equipped with a
-      distance function \(d_S \colon S \times S \to \mathbb{R}\) a <em>metric space</em> (this means the function \(d_S\) satisfies some axioms, but we shall not get into that here. For our purposes, we assume that \(d_S\) is a valid notion of distance.) We simply replace \(d_S\) in place of the distance function on \(\mathbb{R}\) (\(|x-y|, x,y \in \mathbb{R}\)) to get an extension of continuity to metric spaces.</p>
+      distance function \(d_S \colon S \times S \to \mathbb{R}\) a <em>metric space</em> (this means the function \(d_S\) satisfies some axioms, but we shall not get into that here. For our purposes, we assume that \(d_S\) is a valid notion of distance). We simply replace \(d_S\) in place of the distance function on \(\mathbb{R}\) (\(|x-y|, x,y \in \mathbb{R}\)) to get an extension of continuity to metric spaces.</p>
       <div class="definition">
         <p><strong>Definition 6 (Continuity in metric spaces).</strong> Suppose \((S,d_S)\) is a metric space. Let \(f \colon S \to S\) be a function and \(x_0 \in S\). The function \(f\) is <em>continuous at \(x_0\)</em> if, for every \(\epsilon \in \mathbb{R}_{>0}\), there is a neighbourhood \(N(x_0,\delta_0)=\{y \in \mathbb{R} \mid d_S(y,x) &lt; \delta\}\), such that \(d_S(f(x),f(x_0))&lt; \epsilon\) for all \(x \in N(x_0,\delta_0)\).</p>
 <p>
@@ -291,6 +291,9 @@ Using this, we get that for any single stroke graphable function \(f \colon [0,1
           <li>The function \(f(x)=\sin(\frac{1}{x})\) was used as an example <a href="#a-word-of-caution">here</a>. It is, however, not defined at \(x=0\). This is now fixed. Thanks anonymous reader letting me know.</li>
         </ul>
         Found a mistake? <a href="mailto:mailthescribbleboard@gmail.com">Let me know</a>!</p>
+      <h3>Acknowledgements:</h3>
+      <p>I was first exposed to the \(\epsilon -\delta\) definition of continuity in my first course on calculus. The IISERB Maths Club conducted an open hour then, in which club members (Dhawal and Raj) encouraged me to attempt generalising the definition in this manner.
+      </p>
     </div>
   </div>
   <footer>
