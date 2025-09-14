@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Discovering Induced Representations - The Scribble Board</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BJEGFSMT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y0BJEGFSMT');
+    </script>
+    <script defer src="../navigation.js"></script>
+    <script defer src="./induced-representations/induced.js"></script>
+    <script defer src="../mathjax-config.js"></script>
+    <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../styles.css"/>
+    <link rel="stylesheet" href="./induced-representations/induced.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="progress-bar" > </div>
+    <div class="topnav" id="myTopnav">
+        <a href="../index.html">Home</a>
+        <a href="../fun.html">Fun proofs</a>
+        <a href="../exposition.html" class="active">Exposition</a>
+        <a href="../about.html">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" onclick="switchThemes()">☀️ Light</button>
+    <nav class="navigation-actions" id="nav-actions">
+        <h4>Contents</h4>
+        <ul>
+            <li><a href="#first-attempts">First Attempts</a></li>
+            <li><a href="#using-v">Using the Vector Space \(V\)</a></li>
+            <li><a href="#using-rho">Using the Representation of \(H\)</a></li>
+            <li><a href="#induced">The Induced Representation</a></li>
+            <li><a href="#the-chest">The Chest</a></li>
+        </ul>
+    </nav>
+
+    <nav class="navigation-homomorphisms hide" id="nav-homomorphisms">
+        <h4>Contents</h4>
+        <ul>
+            <li><a href="#first-attempts-1">First Attempts</a></li>
+            <li><a href="#using-v-1">Using the Vector Space \(V\)</a></li>
+            <li><a href="#using-rho-1">Using the Representation of \(H\)</a></li>
+            <li><a href="#induced-1">The Induced Representation</a></li>
+            <li><a href="#the-chest-1">The Chest</a></li>
+        </ul>
+    </nav>
+
+    <nav class="navigation-modules hide" id="nav-modules">
+        <h4>Contents</h4>
+        <ul>
+            <li><a href="#solving-the-puzzle-2">Solving the Puzzle</a></li>
+            <li><a href="#the-chest-2">The Chest</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Discovering Induced Representations</h1>
+
+            <p>This article views representations through three lenses &mdash; as linear group actions; as group homomorphisms; and as modules over group rings. Use the dropdown menu below to switch between them.</p>
+
+            <select class="dropdown" id="language" onchange="chooseFormulation()">
+                <option value="actions" selected>Representations are linear group actions</option>
+                <option value="homomorphisms">Representations are group homomorphisms</option>
+                <option value="modules">Representations are modules over group rings</option>
+            </select>
+              
+            <div id="actions">
+                <p>
+                    Excepting the boxed text in pink, one may ignore the story in the preamble and start from the section <a href="#first-attempts">First Attempts</a> without loss in mathematical content.
+                </p>
+
+                <p>While out shopping for some standard issue lemmas in Maths-town, we notice a commotion at the town square. We gather from overheard snippets and other folks at the square that some alien artefact appears to have materialised overnight atop the statue of the town's Founder, Professor Primus. That's when we are approached by a messenger from the Mayor. The alien artefact has a puzzle to solve, it seems, and the Mayor seeks our help in solving it. Of course, we agree. At the Mayor's office, they explain that as far as they have been able to figure out, the artefact seems to be a treasure chest with a lock on it. There is also a hint engraved on the chest which reads thus:</p>
+                <div class="alien">
+                    <p align="center">Within lie powerful tools and secrets that will rock your world! Beware, however, that such tools are not for the faint of mind. We give you a group \(G\), a subgroup \(H \leq G\) and an \(F\)-representation \(\rho \colon H \times V \to V\) of \(H\). An \(F\)-representation \(\sigma\) of \(G\) (that uses \(\rho\) in some manner) you shall need to open this chest!</p>
+                </div>
+                <p>We accept this task and take the chest with us to try our hand at opening it.</p>
+                
+                <div class="h2-0" id="first-attempts">First Attempts</div>
+                <p>
+                    Well, given a group \(G\) and a field \(F\), the most obvious representation is the trival representation \(\sigma \colon G\times F \to F\) where
+                    \[\sigma(g,f) = f\] 
+                    for all \(g \in G, f \in F\).</p>
+                <p>
+                    Does this representation unlock the chest? It is perhaps optimistic to expect a trivial solution. We have not even used all of the information we were given, after all. But we did use the field \(F\), so it's a good first guess.
+                    <br>
+                    We try to unlock the chest using this trivial representation \(\sigma\), but it does not open. :(
+                </p>
+                <p>
+                    Is there any other representation that we can create with just the group \(G\) and the field \(F\)? Why, the regular representation, of course!
+                    <br>
+                    To set things up, we define the set \(F[G]\)
+                    <div id="group-algebra">
+                        \[F[G] \coloneqq \{f \mid f\colon G \to F\}\]
+                        endowed with componentwise addition
+                        \[(f_1+f_2) (g) = f_1(g)+f_2(g), \text{ } \forall g \in G, f_1,f_2 \in F[G]\]
+                        and scalar multiplication
+                        \[(\lambda \cdot f)(g) = \lambda \cdot (f(g)), \text{ } \forall g \in G, \lambda \in F, f \in F[G].\]
+                        These operations make it an \(F\)-vector space.
+                    </div>
+                    <br>
+                    We may now define the regular representation \(\sigma_\text{reg} \colon G \times F[G] \to F[G]\) by
+                    \[\sigma_\text{reg}(g,f)(x)=f(xg), \text{  } \forall x\in G\]
+                    for all \(g \in G\), \(f \in F[G]\).
+                </p>
+                <p>
+                    This still does not use either the vector space \(V\) or the representation \(\rho\), but it is at least non trivial.
+                    <br> 
+                    We try to open the lock with \(\sigma_\text{reg};\) and it does not work this time too. :(
+                </p>
+                <p>
+                    We suppose that this means we have <em>got</em> to use the vector space \(V\) or \(\rho\) and try that next.
+                </p>
+
+                <div class="h2-0" id="using-v">Using the Vector Space \(V\)</div>
+                <p>
+                    Our goal now is to construct an \(F\)-vector space \(W\) that \(G\) can act on linearly (which somehow uses \(V\)). We will try to build on \(\sigma_\text{reg}\).
+                </p>
+                <p>
+                    Notice that in <a href="#group-algebra">the definition of \(F[G]\)</a>, the componentwise operations gave it a vector space structure because the functions took values in \(F\), which was an \(F\)-vector space. Perhaps we can define similar componentwise operations on a set of functions that take values in any arbitrary \(F\)-vector space, and obtain a new vector space over \(F\). We now investigate this line of thought.
+                </p>
+                <p>
+                    Define the set \(W\) to be the set of all functions from \(G\) to \(V\).
+                    \[W \coloneqq \{f \mid f \colon G \to V\}\]
+                    As before, we define on \(W\) termwise addition and scalar multiplication (over \(F\)). Upon performing the relevant (laborious) checks, it turns out that \(W\) endowed with this structure also satisfies the axioms of a vector space over \(F\)!
+                </p>
+                <p>
+                    Charming! So if we now find an \(F\)-linear group action of \(G\) on \(W\), then we will have an \(F\)-representation of \(G\). To do so, we try to mimic the group action \(\sigma_\text{reg}\). Notice that under \(\sigma_\text{reg}\), a group element \(g \in G\) acted on a vector \(f \in F[G]\) by 'shuffling around' the values \(f\) takes in the same manner \(g\) 'shuffles around' the elements of \(G\). We define a map \(\sigma_1 \colon G \times W \to W\) in exactly the same fashion.
+                    <div id="defn:sigma_1">
+                        \[\sigma_1(g,f)(x)=f(xg), \text{  } \forall x\in G\]
+                        for all \(g \in G\), \(f \in W\).
+                    </div>
+                    <br>
+                    In order to verify that \(\sigma_1\) as defined is a group action of \(G\) on \(W\), we observe the following two facts.
+                    \[\sigma_1(e,f)(x)=f(xe)=f(x), \text{ } \forall x \in G.\]
+                    for all \(f \in W\). This shows \(\sigma_1(e,f)=f\) for all \(f \in W\). Also, for any \(f \in W\) and \(a,b \in G\), we have
+                    \[\sigma_1(ab,f)(x)=f(xab)=\sigma_1(b,f)(xa)= \sigma_1(a,\sigma_1(b,f))(x), \text{ } \forall x \in G.\]
+                    So \(\sigma_1\) is indeed a group action of \(G\). 
+                    <br>
+                    It is clear that \(\sigma_1\) is an \(F\)-linear group action, and thus an \(F\)-representation of \(G\). 
+                </p>
+                <p>
+                    We now have in our hands an \(F\)-representation of \(G\) that uses the vector space \(V\). So this feels like a better guess than earlier, and we try to unlock the chest with \(\sigma_1\). Still no luck! :( 
+                </p>
+                <p>
+                    The only part of the hint left unused now is the representation \(\rho\) of \(H\). We next try to use that as well.
+                </p>
+
+                <div class="h2-0" id="using-rho">Using the Representation of \(H\)</div>
+                <p>
+                    Again, we try to see if we can build upon \(\sigma_1\) in some way. Our aim here is to find some vector space that \(G\) acts linearly on.
+                    <br>
+                    What does \(\rho\) do? Given any \(h \in H\), \(\rho(h,\cdot)\) is a map from \(V\) to \(V\). Something we could then do is, given a vector \(f \in W\), map it to another vector \(f_1 \in W\) given by \(f_1(x) = \rho(h,f(x))\) for all \(x \in G\).
+                    <br>
+                    This gives us one possible way to modify \(\sigma_1\) using \(\rho\).
+                </p>
+                <p>
+                    Of course, before we can modify \(\sigma_1\) in this fashion, we need some way to associate a given \(g \in G\) with an element \(h\) in the subgroup \(H\). How do we go about doing this?
+                    <br>
+                    This is where the fact that we are working with finite groups comes into play, for we have a finite number of disjoint cosets of \(H\) in \(G\). We suppose now that the set \(B= \{x_1,x_2,\dots,x_t\}\) is a complete set of coset representatives of \(H\) in \(G\). This means, given any \(g \in G\), there are \(h_g \in H\) and \(x_i \in B\) such that \(g=h_g x_i\). This gives us an element \(h_g\) associated with \(g \in G\).
+                </p>
+                <p>
+                    We may now modify \(\sigma_1\) to define a map \(\sigma_2 \colon G \times W \to W\) given by
+                    \[\sigma_2(g,f)(x)=\rho(h_g,f(xg)), \text{  } \forall x\in G\]
+                    for all \(g \in G\), \(f \in W\). (Here \(h_g\) is obtained from the set \(B\) as above.)
+                    <br>
+                    But the set of coset representatives, \(B\), was arbitrarily chosen! So \(\sigma_2(g,f)\) needs to be independent of the choice of \(B\) in order for it to be well-defined. Upon imposing this well-definedness condition, we find that this means
+                    \[\rho(h_1,f(g))=\rho(h_2,f(g)) \text{, for all } g \in G\]
+                    for all \(h_1, h_2 \in H\) and \(f \in W\). Or equivalently,
+                    \[\rho(h,f(g))=\rho(e,f(g))=f(g) \text{, for all } g \in G\]
+                    for all \(h \in H\) and \(f \in W\).
+                    <br>
+                    Certainly not every \(f \in W\) has such invariant behaviour under the map \(\rho(h,\cdot)\). We might still hope that the set of all such functions forms a vector subspace of \(W\), as that will let us restrict the map to this subspace (if it is one) and define an action. With this in mind, we define the set
+                    \[W_1 \coloneqq \{f \in W \mid \rho(h,f(g))=f(g) \text{ for all } h \in H, g \in G\}.\]
+                    Clearly \(0 \in W_1\). So \(W_1 \neq \emptyset\). Also, for any \(f_1,f_2 \in W_1\) and \(\lambda \in F\), we have \(f_1+\lambda f_2 \in W_1\). This shows \(W_1\) is a subspace of \(W\).
+                    <br>
+                    So we modify the definition of \(\sigma_2\) to \(\sigma_2 \colon G \times W_1 \to W_1\) given by
+                    \[\sigma_2(g,f)(x)=f(xg)\]
+                    for all \(g \in G\), \(f \in W_1\). We can see from this definition that \(\sigma_2\) is an \(F\)-linear group action of \(G\) on \(W_1\) (this is inherited from \(\sigma_1\)).
+                </p>
+                <p>
+                    Are we done now? Is \(\sigma_2\) the \(F\)-representation that we need to unlock the chest? We've used all of the objects given to us in the hint. There is, however, one more end left to wrap up. \(W_1\) as defined is certainly a subspace of \(W\). But so is the zero subspace. Is \(W_1\) necessarily non zero? It turns out that it is not.
+                    <br>
+                    <div class="example">
+                        Consider, for example, \(G=(\mathbb{Z}_4,+)\), \(H=\{[0],[2]\}\) and a \(\mathbb{C}\)-linear action \(\rho \colon H \times \mathbb{C} \to \mathbb{C}\) given by
+                        \[\rho([x],z)=e^{2 \pi i \frac{x}{4}} z \]
+                        for all \([x] \in H\), \(z \in \mathbb{C}\).
+                        <br>
+                        Let \(f \in W_1\) and \(g \in G\). Then \(f(g) \in \mathbb{C}\) and \(\rho([2],f(g))=f(g)\) implies \(e^{\pi i} f(g) = f(g)\). This implies \(f(g)=0\).
+                        <br>
+                        So \(f=0\). We then get that \(W_1\) is the zero subspace!
+                    </div>
+                    So we do not expect \(\sigma_2\) to open the chest. We try it nevertheless. Unsurprisingly, it does not work. :(
+                </p>
+
+                <div class="h2-0" id="induced">The Induced Representation</div>
+                <p>
+                    We obtained \(\sigma_2\) by requiring 'invariance' of \(\sigma_1\) under the operation of some \(\rho(h,\cdot)\) on the right side of <a href="#defn:sigma_1">the definition of \(\sigma_1\)</a>. We may instead require that the operation of some \(h \in H\) on the left of <a href="#defn:sigma_1">the definition of \(\sigma_1\)</a> 'plays well' with the corresponding operation of \(\rho(h,\cdot)\) on the right. We shall now put this idea on rigorous footing.
+                </p>
+                <p>
+                    Define a map \(\Ind{G}{H}{\rho} \colon G \times W \to W\) as
+                    \[\Ind{G}{H}{\rho}(g,f)(x)= f(xg), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W\). We further impose the condition
+                    \[\Ind{G}{H}{\rho}(g,f)(hx)= \rho(h,f(xg)), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W\), \(h \in H\).
+                    <br>
+                    This is equivalent to imposing on \(f\):
+                    \[f(hg)=\rho(h,f(g))\]
+                    for all \(g\in G\), \(h \in H\).
+                    <br>
+                    As before, we do not expect every \(f \in W\) to have this property, but maybe the set of such functions is a subspace. We define
+                    \[W_\rho \coloneqq \{f \in W \mid f(hg)=\rho(h,f(g)) \text{ for all } h \in H \text{, } g \in G\}.\]
+                    Clearly \(0 \in V_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in \mathbb{C}\) and \(h \in H, g \in G\), we get:
+                    \[\begin{align*}
+                        (f_1+cf_2)(hg)&= f_1(hg) +c f_2(hg)\\
+                        &= \rho(h,f_1(g)) + c \rho(h,f_2(g))\\
+                        &= \rho(h,f_1(g)+c f_2(g))\\
+                        &= \rho(h,(f_1+cf_2)(g))
+                    \end{align*}\]
+                    So \(W_\rho\) is a subspace of \(W\).
+                </p>
+                <p>Is \(W_\rho\) non zero? If it were to be non zero, we can modify the definition of \(\Ind{G}{H}{\rho}\) along the same lines as earlier and get a non zero \(F\)-linear representation of \(G\). To this end, we try several things and make the following educated guess.
+                    <div class="claim">
+                        <strong>Claim: </strong> Suppose \(Hx_1, Hx_2, \dots, Hx_t\) are all the distinct cosets of \(H\) in \(G\) and \(B = \{v_1, \dots v_k\}\) is a basis for \(V\). So \(t=[G:H]\) and \(k=\dim V\). For fixed \(1\leq i \leq t\) and \(1\leq j \leq k\), we define a function \(f_{i,j} \colon G \to W\) as
+                        \[f_{i,j}(g) = \begin{cases}
+                            \rho(h,v_j) &\colon \text{If } g=hx_i\\
+                            0 &\colon \text{If } g \notin Hx_i
+                        \end{cases}\]
+                        Then each function \(f_{i,j}\) is in \(W_\rho\).
+                    </div>
+                    <emph>Proof.</emph>
+                    Fix \(g \in G\) and \(h \in H\). Then,
+                    \[f_{i,j}(y) = \begin{cases}
+                        \rho(h,v_j) &\colon \text{If } y=hx_i\\
+                        0 &\colon \text{If } y \notin Hx_i
+                    \end{cases}\]
+                    Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
+                    \[f_{i,j}(hg)=0=f_{i,j}(g)=\rho(h,f_{i,j}(g)).\]
+                    Now suppose \(g \in Hx_i\). Then there is \(h_1 \in H\) such that \(g=h_1x_i\). Also, \(hg =h h_1 x_i\). So, from the definition of \(f_{i,j}\), we get
+                    \[f_{i,j}(hg)=\rho(hh_1,v_j)=\rho(h,\rho(h_1,v_j))=\rho(h,f_{i,j}(g)).\]
+                    This shows \(f_{i,j} \in W_\rho\).
+                </p>
+                <p>
+                    Since \(\rho\) is a group action we get \(f_{i,j}(x_i)=\rho(e,v_j)=v_j\), and so each \(f_{i,j}\) above is non zero. So \(W_\rho\) is non zero, as we hoped for!
+                </p>
+                <p>
+                    Like in the <a href="#using-rho">previous section</a>, we now modify \(\Ind{G}{H}{\rho}\) to \(\Ind{G}{H}{\rho} \colon G \times W_\rho \to W_\rho\) given by
+                    \[\Ind{G}{H}{\rho}(g,f)(x)= f(xg), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W_\rho\). Again, \(\Ind{G}{H}{\rho}\) inherits being an \(F\)-linear group action from \(\sigma_1\), and is thus an \(F\)-representation of \(G\).
+                </p>
+                <p>
+                    Oof! We have with us now an \(F\)-representation of \(G\). And this is it! We've finally unlocked the chest, using \(\Ind{G}{H}{\rho}\). :)
+                </p>
+
+                <div class="h2-0" id="the-chest">The Chest</div>
+                <p>
+                    Now that we've unlocked the chest, we call the Mayor and their advisers. The Mayor opens the chest and finds a scroll inside, which they hold out for all to read.
+                </p>
+                <div class="alien">
+                    <p>
+                        Greetings, residents of Maths-town! 
+                    </p>
+                    <p>
+                        Nice job on cracking the puzzle! There are a quite a few more neat results about the induced representation \(\Ind{G}{H}{\rho}\) that you may find interesting. For instance, it can be shown that the induced representation has degree \([G:H]\dim V\). Try to find a basis! (Perhaps the set of non zero functions you previously found form one?) It turns out also that the induced representation is the adjoint of the restricted representation, so the definition is not really something arbitrary. (This is often called Frobenius Reciprocity, a proof of which can be found in any standard Earth textbook on Representation Theory.) What happens when we take a restriction of an induced representation? (Mackey's Decompostion theorem will aid you on this quest. Again, it can be found in any standard Earth textbook on Representation Theory.)
+                        <br>                    
+                        We are a highly advanced civilisation on a mission to foster greater exchange of ideas among the intelligent species of the universe. The lock was in fact a test to determine whether your civilisation could contribute to this project. We are therefore absolutely delighted to invite you to join us on this mission. We believe that this could be a gainful endeavour for both our civilisations, and for the universe at large. Opening this chest sent us an automated message, and a team of our representatives are already on their way to negotiate the details with you. We hope you will find us as interesting as we are certain we will find you to be.
+                        <br>
+                    </p>
+                    <p>
+                        Cheers!
+                        <br>
+                        Planet of Xorna
+                    </p>
+                </div>
+            </div>
+
+            <div class="hide" id="homomorphisms">
+                <p>
+                    Excepting the boxed text in pink, one may ignore the story in the preamble and start from the section <a href="#first-attempts-1">First Attempts</a> without loss in mathematical content.
+                </p>
+
+                <p>While out shopping for some standard issue lemmas in Maths-town, we notice a commotion at the town square. We gather from overheard snippets and other folks at the square that some alien artefact appears to have materialised overnight atop the statue of the town's Founder, Professor Primus. That's when we are approached by a messenger from the Mayor. The alien artefact has a puzzle to solve, it seems, and the Mayor seeks our help in solving it. Of course, we agree. At the Mayor's office, they explain that as far as they have been able to figure out, the artefact seems to be a treasure chest with a lock on it. There is also a hint engraved on the chest which reads thus:</p>
+                <div class="alien">
+                    <p align="center">Within lie powerful tools and secrets that will rock your world! Beware, however, that such tools are not for the faint of mind. We give you a group \(G\), a subgroup \(H \leq G\) and an \(F\)-representation \((\rho,V)\) of \(H\). An \(F\)-representation of \(G\) (that uses \(\rho\) in some manner) you shall need to open this chest!</p>
+                </div>
+                <p>We accept this task and take the chest with us to try our hand at opening it.</p>
+                
+                <div class="h2-1" id="first-attempts-1">First Attempts</div>
+                <p>
+                    Well, given a group \(G\) and a field \(F\), the most obvious representation is the trival representation \(\sigma \colon G \to GL(F)\) where
+                    \[\sigma(g) = 1_F\] 
+                    for all \(g \in G, f \in F\).</p>
+                <p>
+                    Does this representation unlock the chest? It is perhaps optimistic to expect a trivial solution. We have not even used all of the information we were given, after all. But we did use the field \(F\), so it's a good first guess.
+                    <br>
+                    We try to unlock the chest using this trivial representation \(\sigma\), but it does not open. :(
+                </p>
+                <p>
+                    Is there any other representation that we can create with just the group \(G\) and the field \(F\)? Why, the regular representation, of course!
+                    <br>
+                    To set things up, we define the set \(F[G]\)
+                    <div id="group-algebra-1">
+                        \[F[G] \coloneqq \{f \mid f\colon G \to F\}\]
+                        endowed with componentwise addition
+                        \[(f_1+f_2) (g) = f_1(g)+f_2(g), \text{ } \forall g \in G, f_1,f_2 \in F[G]\]
+                        and scalar multiplication
+                        \[(\lambda \cdot f)(g) = \lambda \cdot (f(g)), \text{ } \forall g \in G, \lambda \in F, f \in F[G].\]
+                        These operations make it an \(F\)-vector space.
+                    </div>
+                    <br>
+                    We may now define the regular representation \(\sigma_\text{reg} \colon G \to GL(F[G])\) by
+                    \[\sigma_\text{reg}(g)(f)(x)=f(xg), \text{  } \forall x\in G\]
+                    for all \(g \in G\), \(f \in F[G]\).
+                </p>
+                <p>
+                    This still does not use either the vector space \(V\) or the representation \(\rho\), but it is at least non trivial.
+                    <br> 
+                    We try to open the lock with \(\sigma_\text{reg};\) and it does not work this time too. :(
+                </p>
+                <p>
+                    We suppose that this means we have <em>got</em> to use the vector space \(V\) or \(\rho\) and try that next.
+                </p>
+    
+                <div class="h2-1" id="using-v-1">Using the Vector Space \(V\)</div>
+                <p>
+                    Our goal now is to construct an \(F\)-vector space \(W\) and a group homomorphism from \(G\) to \(GL(W)\) (which somehow uses \(V\)). We will try to build on \(\sigma_\text{reg}\).
+                </p>
+                <p>
+                    Notice that in <a href="#group-algebra-1">the definition of \(F[G]\)</a>, the componentwise operations gave it a vector space structure because the functions took values in \(F\), which was an \(F\)-vector space. Perhaps we can define similar componentwise operations on a set of functions that take values in any arbitrary \(F\)-vector space, and obtain a new vector space over \(F\). We now investigate this line of thought.
+                </p>
+                <p>
+                    Define the set \(W\) to be the set of all functions from \(G\) to \(V\).
+                    \[W \coloneqq \{f \mid f \colon G \to V\}\]
+                    As before, we define on \(W\) termwise addition and scalar multiplication (over \(F\)). Upon performing the relevant (laborious) checks, it turns out that \(W\) endowed with this structure also satisfies the axioms of a vector space over \(F\)!
+                </p>
+                <p>
+                    Charming! So if we now find a group homomorphism from \(G\) to \(GL(W)\), then we will have an \(F\)-representation of \(G\). To do so, we try to mimic the group action \(\sigma_\text{reg}\). Notice that under \(\sigma_\text{reg}\), a \(g \in G\) was mapped to a linear isomorphism \(\sigma_\text{reg}(g\) which acted on a vector \(f \in F[G]\) by 'shuffling around' the values \(f\) takes in the same manner \(g\) 'shuffles around' the elements of \(G\). We define a map \(\sigma_1 \colon G \to GL(W)\) in exactly the same fashion.
+                    <div id="defn:sigma_1-1">
+                        \[\sigma_1(g)(f)(x)=f(xg), \text{  } \forall x\in G\]
+                        for all \(g \in G\), \(f \in W\).
+                    </div>
+                    <br>
+                    In order to verify that \(\sigma_1\) as defined is a group action of \(G\) on \(W\), we observe the following two facts.
+                    \[\sigma_1(e)(f)(x)=f(xe)=f(x), \text{ } \forall x \in G.\]
+                    for all \(f \in W\). This shows \(\sigma_1(e)(f)=f\) for all \(f \in W\). Also, for any \(f \in W\) and \(a,b \in G\), we have
+                    \[\sigma_1(ab)(f)(x)=f(xab)=\sigma_1(b)(f)(xa)= \sigma_1(a)(\sigma_1(b)(f))(x), \text{ } \forall x \in G.\]
+                    This shows \(\sigma_1(ab) = \sigma_1(a) \circ \sigma_1(b)\). Also, since \(e=a a^{-1}\), the previous two facts imply \(\sigma(a) \in GL(W)\) for all \(a \in G\).
+                    <br> 
+                    So \(\sigma_1\) is indeed a group homomorphism \(G \to GL(W)\). 
+                    <br>
+                    Thus \(\sigma_1\) is an \(F\)-representation of \(G\). 
+                </p>
+                <p>
+                    We now have in our hands an \(F\)-representation of \(G\) that uses the vector space \(V\). So this feels like a better guess than earlier, and we try to unlock the chest with \(\sigma_1\). Still no luck! :( 
+                </p>
+                <p>
+                    The only part of the hint left unused now is the representation \(\rho\) of \(H\). We next try to use that as well.
+                </p>
+    
+                <div class="h2-1" id="using-rho-1">Using the Representation of \(H\)</div>
+                <p>
+                    Again, we try to see if we can build upon \(\sigma_1\) in some way. Our aim here is to find some vector space that we can then use to define a represetation of \(G\).
+                    <br>
+                    What does \(\rho\) do? Given any \(h \in H\), \(\rho(h)\) is a map from \(V\) to \(V\). Something we could then do is, given a vector \(f \in W\), map it to another vector \(f_1 \in W\) given by \(f_1(x) = \rho(h)(f(x))\) for all \(x \in G\).
+                    <br>
+                    This gives us one possible way to modify \(\sigma_1\) using \(\rho\).
+                </p>
+                <p>
+                    Of course, before we can modify \(\sigma_1\) in this fashion, we need some way to associate a given \(g \in G\) with an element \(h\) in the subgroup \(H\). How do we go about doing this?
+                    <br>
+                    This is where the fact that we are working with finite groups comes into play, for we have a finite number of disjoint cosets of \(H\) in \(G\). We suppose now that the set \(B= \{x_1,x_2,\dots,x_t\}\) is a complete set of coset representatives of \(H\) in \(G\). This means, given any \(g \in G\), there are \(h_g \in H\) and \(x_i \in B\) such that \(g=h_g x_i\). This gives us an element \(h_g\) associated with \(g \in G\).
+                </p>
+                <p>
+                    We may now modify \(\sigma_1\) to define a map \(\sigma_2 \colon G \to GL(W)\) given by
+                    \[\sigma_2(g)(f)(x)=\rho(h_g)(f(xg)), \text{  } \forall x\in G\]
+                    for all \(g \in G\), \(f \in W\). (Here \(h_g\) is obtained from the set \(B\) as above.)
+                    <br>
+                    But the set of coset representatives, \(B\), was arbitrarily chosen! So \(\sigma_2(g)(f)\) needs to be independent of the choice of \(B\) in order for it to be well-defined. Upon imposing this well-definedness condition, we find that this means
+                    \[\rho(h_1)(f(g))=\rho(h_2)(f(g)) \text{, for all } g \in G\]
+                    for all \(h_1, h_2 \in H\) and \(f \in W\). Or equivalently,
+                    \[\rho(h)(f(g))=\rho(e)(f(g))=f(g) \text{, for all } g \in G\]
+                    for all \(h \in H\) and \(f \in W\).
+                    <br>
+                    Certainly not every \(f \in W\) has such invariant behaviour under the map \(\rho(h)\). We might still hope that the set of all such functions forms a vector subspace of \(W\), as that will let us restrict the map to this subspace (if it is one) and define a representation. With this in mind, we define the set
+                    \[W_1 \coloneqq \{f \in W \mid \rho(h)(f(g))=f(g) \text{ for all } h \in H, g \in G\}.\]
+                    Clearly \(0 \in W_1\). So \(W_1 \neq \emptyset\). Also, for any \(f_1,f_2 \in W_1\) and \(\lambda \in F\), we have \(f_1+\lambda f_2 \in W_1\). This shows \(W_1\) is a subspace of \(W\).
+                    <br>
+                    So we modify the definition of \(\sigma_2\) to \(\sigma_2 \colon G \to GL(W_1)\) given by
+                    \[\sigma_2(g)(f)(x)=f(xg)\]
+                    for all \(g \in G\), \(f \in W_1\). We can see from this definition that \(\sigma_2\) is a representation of \(G\) on \(W_1\) (this is inherited from \(\sigma_1\)).
+                </p>
+                <p>
+                    Are we done now? Is \(\sigma_2\) the \(F\)-representation that we need to unlock the chest? We've used all of the objects given to us in the hint. There is, however, one more end left to wrap up. \(W_1\) as defined is certainly a subspace of \(W\). But so is the zero subspace. Is \(W_1\) necessarily non zero? It turns out that it is not.
+                    <br>
+                    <div class="example">
+                        Consider, for example, \(G=(\mathbb{Z}_4,+)\), \(H=\{[0],[2]\}\) and a \(\mathbb{C}\)-representation \(\rho \colon H \to GL(\mathbb{C})\) given by
+                        \[\rho([x])(z)=e^{2 \pi i \frac{x}{4}} z \]
+                        for all \([x] \in H\), \(z \in \mathbb{C}\).
+                        <br>
+                        Let \(f \in W_1\) and \(g \in G\). Then \(f(g) \in \mathbb{C}\) and \(\rho([2])(f(g))=f(g)\) implies \(e^{\pi i} f(g) = f(g)\). This implies \(f(g)=0\).
+                        <br>
+                        So \(f=0\). We then get that \(W_1\) is the zero subspace!
+                    </div>
+                    So we do not expect \(\sigma_2\) to open the chest. We try it nevertheless. Unsurprisingly, it does not work. :(
+                </p>
+    
+                <div class="h2-1" id="induced-1">The Induced Representation</div>
+                <p>
+                    We obtained \(\sigma_2\) by requiring 'invariance' of \(\sigma_1\) under the operation of some \(\rho(h)\) on the right side of <a href="#defn:sigma_1-1">the definition of \(\sigma_1\)</a>. We may instead require that the operation of some \(h \in H\) on the left of <a href="#defn:sigma_1-1">the definition of \(\sigma_1\)</a> 'plays well' with the corresponding operation of \(\rho(h)\) on the right. We shall now put this idea on rigorous footing.
+                </p>
+                <p>
+                    Define a map \(\Ind{G}{H}{\rho} \colon G \to GL(W)\) as
+                    \[\Ind{G}{H}{\rho}(g)(f)(x)= f(xg), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W\). We further impose the condition
+                    \[\Ind{G}{H}{\rho}(g)(f)(hx)= \rho(h)(f(xg)), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W\), \(h \in H\).
+                    <br>
+                    This is equivalent to imposing on \(f\):
+                    \[f(hg)=\rho(h)(f(g))\]
+                    for all \(g\in G\), \(h \in H\).
+                    <br>
+                    As before, we do not expect every \(f \in W\) to have this property, but maybe the set of such functions is a subspace. We define
+                    \[W_\rho \coloneqq \{f \in W \mid f(hg)=\rho(h)(f(g)) \text{ for all } h \in H \text{, } g \in G\}.\]
+                    Clearly \(0 \in V_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in \mathbb{C}\) and \(h \in H, g \in G\), we get:
+                    \[\begin{align*}
+                        (f_1+cf_2)(hg)&= f_1(hg) +c f_2(hg)\\
+                        &= \rho(h)(f_1(g)) + c \rho(h)(f_2(g))\\
+                        &= \rho(h)(f_1(g)+c f_2(g))\\
+                        &= \rho(h)((f_1+cf_2)(g))
+                    \end{align*}\]
+                    So \(W_\rho\) is a subspace of \(W\).
+                </p>
+                <p>Is \(W_\rho\) non zero? If it were to be non zero, we can modify the definition of \(\Ind{G}{H}{\rho}\) along the same lines as earlier and get a non zero \(F\)-linear representation of \(G\). To this end, we try several things and make the following educated guess.
+                    <div class="claim">
+                        <strong>Claim: </strong> Suppose \(Hx_1, Hx_2, \dots, Hx_t\) are all the distinct cosets of \(H\) in \(G\) and \(B = \{v_1, \dots v_k\}\) is a basis for \(V\). So \(t=[G:H]\) and \(k=\dim V\). For fixed \(1\leq i \leq t\) and \(1\leq j \leq k\), we define a function \(f_{i,j} \colon G \to W\) as
+                        \[f_{i,j}(g) = \begin{cases}
+                            \rho(h)(v_j) &\colon \text{If } g=hx_i\\
+                            0 &\colon \text{If } g \notin Hx_i
+                        \end{cases}\]
+                        Then each function \(f_{i,j}\) is in \(W_\rho\).
+                    </div>
+                    <emph>Proof.</emph>
+                    Fix \(g \in G\) and \(h \in H\). Then,
+                    \[f_{i,j}(y) = \begin{cases}
+                        \rho(h)(v_j) &\colon \text{If } y=hx_i\\
+                        0 &\colon \text{If } y \notin Hx_i
+                    \end{cases}\]
+                    Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
+                    \[f_{i,j}(hg)=0=f_{i,j}(g)=\rho(h)(f_{i,j}(g)).\]
+                    Now suppose \(g \in Hx_i\). Then there is \(h_1 \in H\) such that \(g=h_1x_i\). Also, \(hg =h h_1 x_i\). So, from the definition of \(f_{i,j}\), we get
+                    \[f_{i,j}(hg)=\rho(hh_1)(v_j)=\rho(h)\circ\rho(h_1)(v_j)=\rho(h)(f_{i,j}(g)).\]
+                    This shows \(f_{i,j} \in W_\rho\).
+                </p>
+                <p>
+                    Since \(\rho(e)=\text{Id}\), each \(f_{i,j}\) above is non zero. So \(W_\rho\) is non zero, as we hoped for!
+                </p>
+                <p>
+                    Like in the <a href="#using-rho-1">previous section</a>, we now modify \(\Ind{G}{H}{\rho}\) to \(\Ind{G}{H}{\rho} \colon G \to GL(W_\rho)\) given by
+                    \[\Ind{G}{H}{\rho}(g)(f)(x)= f(xg), \text{ } \forall x \in G\]
+                    for all \(g \in G\), \(f \in W_\rho\). Again, \(\Ind{G}{H}{\rho}\) inherits being a group homomorphism from \(\sigma_1\), and is thus an \(F\)-representation of \(G\).
+                </p>
+                <p>
+                    Oof! We have with us now an \(F\)-representation of \(G\). And this is it! We've finally unlocked the chest, using \(\Ind{G}{H}{\rho}\). :)
+                </p>
+
+                <div class="h2-1" id="the-chest-1">The Chest</div>
+                <p>
+                    Now that we've unlocked the chest, we call the Mayor and their advisers. The Mayor opens the chest and finds a scroll inside, which they hold out for all to read.
+                </p>
+                <div class="alien">
+                    <p>
+                        Greetings, residents of Maths-town! 
+                    </p>
+                    <p>
+                        Nice job on cracking the puzzle! There are a quite a few more neat results about the induced representation \(\Ind{G}{H}{\rho}\) that you may find interesting. For instance, it can be shown that the induced representation has degree \([G:H]\dim V\). Try to find a basis! (Perhaps the set of non zero functions you previously found form one?) It turns out also that the induced representation is the adjoint of the restricted representation, so the definition is not really something arbitrary. (This is often called Frobenius Reciprocity, a proof of which can be found in any standard Earth textbook on Representation Theory.) What happens when we take a restriction of an induced representation? (Mackey's Decompostion theorem will aid you on this quest. Again, it can be found in any standard Earth textbook on Representation Theory.)
+                        <br>                    
+                        We are a highly advanced civilisation on a mission to foster greater exchange of ideas among the intelligent species of the universe. The lock was in fact a test to determine whether your civilisation could contribute to this project. We are therefore absolutely delighted to invite you to join us on this mission. We believe that this could be a gainful endeavour for both our civilisations, and for the universe at large. Opening this chest sent us an automated message, and a team of our representatives are already on their way to negotiate the details with you. We hope you will find us as interesting as we are certain we will find you to be.
+                        <br>
+                    </p>
+                    <p>
+                        Cheers!
+                        <br>
+                        Planet of Xorna
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="hide" id="modules">
+                <p>
+                    This version assumes knowledge of module theory. Consequently, it is not as illuminating as the other two versions, for the real substance behind induced representations has now been abstracted away into module theory. This version serves mostly to complete presenting induced representations in the three formulations I know of. If this were to expound on the substance behind induced representations using module theoretic language, it would be better titled 'Discovering Tensor Products of Modules', which is not the intent of this post. Perhaps I will write a post on that later, but for now I shall direct the reader interested in the module theoretic underpinnings of induced representations towards Section 10.4 (Tensor Products of Modules) of Dummit and Foote's <em>Abstract Algebra</em>.
+                </p>
+
+                <p>
+                    Excepting the boxed text in pink, one may ignore the story in the preamble and start from the section <a href="#solving-the-puzzle-2">Solving the Puzzle</a> without loss in mathematical content.
+                </p>
+
+                <p>While out shopping for some standard issue lemmas in Maths-town, we notice a commotion at the town square. We gather from overheard snippets and the other folks at the square that some alien artefact appears to have materialised overnight atop the statue of the town's Founder, Professor Primus. That's when we are approached by a messenger from the Mayor. The alien artefact has a puzzle to solve, it seems, and the Mayor seeks our help in solving it. Of course, we agree. At the Mayor's office, they explain that as far as they have been able to figure out, the artefact seems to be a treasure chest with a lock on it. There is also a hint engraved on the chest which reads thus:</p>
+                <div class="alien">
+                    <p align="center">Within lie powerful tools and secrets that will rock your world! Beware, however, that such tools are not for the faint of mind. We give you a group \(G\), a subgroup \(H \leq G\). Define \(F[H]\) by
+                    \[F[H] \coloneqq \{ f \colon H \to F\}\]
+                    and endow it with componentwise addition
+                    \[(f_1+f_2) (h) = f_1(h)+f_2(h), \text{ } \forall h \in H, f_1,f_2 \in F[H]\]
+                    and multiplication
+                    \[(f_1 \cdot f_2)(h) = \sum_{x\in H} f_1(x) \cdot f_2(x^{-1}h), \text{ } \forall h \in H, f_1, f_2 \in F[H].\]
+                    These operations make it a ring with the identity \(I (h) = \begin{cases}
+                    1_F &\colon h=e\\
+                    0 &\colon \text{Otherwise}
+                    \end{cases}\)
+                    <br>
+                    Thus, we may define modules over \(F[H]\) and we give you one such \(F[H]\)-module \(V\) (an \(F\)-representation of \(H\)).
+                    <br>
+                    An \(F\)-representation rof \(G\) (that uses \(V\) in some manner) you shall need to open this chest!</p>
+                </div>
+                <p>We accept this task and take the chest with us to try our hand at opening it.</p>
+
+                <div class="h2-2" id="solving-the-puzzle-2">Solving the Puzzle</div>
+                <p>
+                    An \(F\)-representation of \(G\) is an \(F[G]\) module where \(F[G]\) is a ring with identity defined in the same fashion as \(F[H]\).
+                    \[F[G] \coloneqq \{ f \colon G \to F\}\]
+                    and is endowed with componentwise addition
+                    \[(f_1+f_2) (h) = f_1(h)+f_2(h), \text{ } \forall h \in G, f_1,f_2 \in F[G]\]
+                    and multiplication
+                    \[(f_1 \cdot f_2)(h) = \sum_{x\in G} f_1(x) \cdot f_2(x^{-1}h), \text{ } \forall h \in G, f_1, f_2 \in F[G].\]
+                    These operations make it a ring with the identity \(I (h) = \begin{cases}
+                    1_F &\colon h=e\\
+                    0 &\colon \text{Otherwise}
+                    \end{cases}\)
+                    <br>
+                    Our goal now is to find an \(F[G]\)-module.
+                    <br>
+                    Well, every ring is a module over itself, so as a first guess we try to open the chest using this module. It remains locked. :(
+                </p>
+                <p>
+                    We now notice that elements of \(F[H]\) can be viewed as elements of \(F[G]\) under the following treatment.
+                    <br>
+                    Given any \(f_H \in F[H]\), we view it as \(f_G \in F[G]\) where \(f_G\) is given by \(f_G(x) = \begin{cases}
+                    f_H(x) &\colon x \in H\\
+                    0 &\colon x \notin H
+                    \end{cases}\)
+                    <br>
+                    Put another way, \(F[G]\) contains an isomorphic copy of \(F[H]\). We may thus view \(F[H]\) as a subring of \(F[G]\) (upto isomorphism).
+                </p>
+                <p>
+                    The hint also asked us to use the \(F[H]\)-module \(V\) to construct an \(F[G]\)-module, which is our goal now. With the view that \(F[H]\) is a subring of \(F[G]\), this amounts to constructing a module over a larger ring using a module over its subring.
+                    <br>
+                    An immediate way to undertake such a construction is to use tensor products of modules!
+                </p>
+                <p>
+                    Let \(K\) be the free abelian group on \(F[G] \times V\) given by
+                    \[K= \{ z_1 (f_1,v_1) + z_2 (f_2,v_2) + \dots + z_n(f_n,v_n) \mid z_i \in \mathbb{Z}, f_i \in F[G], v_i \in V \text{ } \forall i \in {1,2,\dots ,n}, \text{ and } n\in \mathbb{N}_{>0}\}.\]
+                    Define a subset of \(Q\) of \(K\) by
+                    \[Q= \left\{\begin{align*}
+                    (f_1+f_2,v_1)-(f_1,v_1)-(f_2,v_1),\\
+                    (f_1,v_1 +v_2)-(f_1,v_1)-(f_1,v_2),\\
+                    (f_1 g_1, n_1)-(f_1,g_1 n_1)
+                    \end{align*} \middle\vert \text{For all } f_1,f_2 \in F[G], g_1 \in F[H] \text{ and } v_1,v_2 \in V\right\}\]
+                    Let \(L =\langle Q \rangle\) be the subgroup of \(K\) generated by \(Q\). Since \(K\) is abelian, \(L\) is a normal subgroup and the quotient group \(K/L\) is well defined.
+                    <br>
+                    We call this quotient group \(K/L\) the tensor product of \(F[G]\) and \(V\) over \(F[H]\) and denote it by \(F[G] \otimes_{F[H]} V\). We also denote by \(f \otimes v\) the coset in \(F[G] \otimes_{F[H]} V\) that contains \((f,v)\) and call it a simple tensor. Notice that every element in \(F[G] \otimes_{F[H]} V\) can be expressed as a finite sum of some simple tensors. Also, from the definition of \(Q\), we have:
+                    \[\begin{align}
+                    \label{simpleTensor}
+                    (f_1+f_2) \otimes (v_1) &= f_1 \otimes v_1 + f_2 \otimes v_1, \\
+                    (f_1) \otimes (v_1 +v_2) &= f_1 \otimes v_1 + f_1 \otimes v_2, \text{ and}\\
+                    (f_1 g_1) \otimes (n_1) &= (f_1)\otimes (g_1 n_1)
+                    \end{align}\]
+                    We may now define multiplication on \(F[G] \otimes_{F[H]} V\) by an element in \(F[G]\) as
+                    \[ f (\sum_{i \in A} (f_i,v_i)) = \sum_{i \in A} (f \cdot f_i, v_i)\]
+                    for all \(f \in F[G]\) and \(\sum_{i \in A} (f_i,v_i) \in F[G] \otimes_{F[H]} V\) where \(A\) is a finite index set.
+                    <br>
+                    It now follows from the relations in (1), (2) and (3) that the above multiplication equips \(F[G] \otimes_{F[H]} V\) with an \(F[G]\)-module structure.
+                </p>
+                <p>
+                    We have an \(F[G]\)-module in our hands, just what we wanted. We call the tensor product \(F[G] \otimes_{F[H]} V\) the induced representation \(\Ind{G}{H}{V}\). Is this the \(F\)-representation of \(G\) that unlocks the chest? It certainly uses the \(F[H]\) module \(V\). We try this. And, yay, this does open the chest! :)
+                </p>
+                
+                <div class="h2-2" id="the-chest-2">The Chest</div>
+                <p>
+                    Now that we've unlocked the chest, we call the Mayor and their advisers. The Mayor opens the chest and finds a scroll inside, which they hold out for all to read.
+                </p>
+                <div class="alien">
+                    <p>
+                        Greetings, residents of Maths-town! 
+                    </p>
+                    <p>
+                        Nice job on cracking the puzzle! There are a quite a few more neat results about the induced representation \(\Ind{G}{H}{V}\) that you may find interesting. For instance, it can be shown that the induced representation has degree \([G:H]\dim V\). Try to find a basis! It turns out also that the induced representation is the adjoint of the restricted representation, so the definition is not really something arbitrary. (This is often called Frobenius Reciprocity, a proof of which can be found in any standard Earth textbook on Representation Theory.) What happens when we take a restriction of an induced representation? (Mackey's Decompostion theorem will aid you on this quest. Again, it can be found in any standard Earth textbook on Representation Theory.)
+                        <br>                    
+                        We are a highly advanced civilisation on a mission to foster greater exchange of ideas among the intelligent species of the universe. The lock was in fact a test to determine whether your civilisation could contribute to this project. We are therefore absolutely delighted to invite you to join us on this mission. We believe that this could be a gainful endeavour for both our civilisations, and for the universe at large. Opening this chest sent us an automated message, and a team of our representatives are already on their way to negotiate the details with you. We hope you will find us as interesting as we are certain we will find you to be.
+                        <br>
+                    </p>
+                    <p>
+                        Cheers!
+                        <br>
+                        Planet of Xorna
+                    </p>
+                </div>
+                
+            </div>
+
+
+            <h3>Corrections:</h3>
+            <p>None yet, <a href="mailto:mailthescribbleboard@gmail.com">let me know</a> if you spot any mistake!</p>
+            
+            <h3>Acknowledgements:</h3>
+            <p>I first studied induced representations as part of an internship on Representation Theory under the guidance of Dr. Ajit Bhand.
+            </p>
+        </div>
+    </div>
+    <footer>
+        <a rel="me" href="https://mathstodon.xyz/@wandering_student">I'm on Mastodon!</a>
+        <p>Want to be notified of new posts? Sign up <a href="https://forms.gle/WzB1BgRED3sANbUv6">here</a>!</p>
+        <p>This article is published under a <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International</a> license.</p>
+    </footer>
+</body>
+</html>
