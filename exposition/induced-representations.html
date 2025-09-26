@@ -69,6 +69,8 @@
         <div class="container">
             <h1>Discovering Induced Representations</h1>
 
+            <p>When I first came across induced representations, its construction felt very contrived. This article is my attempt at explaining why the definition is not so contrived after all.</p>
+
             <p>This article views representations through three lenses &mdash; as linear group actions; as group homomorphisms; and as modules over group rings. Use the dropdown menu below to switch between them.</p>
 
             <select class="dropdown" id="language" onchange="chooseFormulation()">
@@ -216,13 +218,13 @@
                     \[\Ind{G}{H}{\rho}(g,f)(hx)= \rho(h,f(xg)), \text{ } \forall x \in G\]
                     for all \(g \in G\), \(f \in W\), \(h \in H\).
                     <br>
-                    This is equivalent to imposing on \(f\):
+                    Since \(\Ind{G}{H}{\rho}(g)(f)(x)= f(xg)\) by definition, this is equivalent to imposing on \(f\):
                     \[f(hg)=\rho(h,f(g))\]
                     for all \(g\in G\), \(h \in H\).
                     <br>
                     As before, we do not expect every \(f \in W\) to have this property, but maybe the set of such functions is a subspace. We define
                     \[W_\rho \coloneqq \{f \in W \mid f(hg)=\rho(h,f(g)) \text{ for all } h \in H \text{, } g \in G\}.\]
-                    Clearly \(0 \in V_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in \mathbb{C}\) and \(h \in H, g \in G\), we get:
+                    Clearly \(0 \in W_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in F\) and \(h \in H, g \in G\), we get:
                     \[\begin{align*}
                         (f_1+cf_2)(hg)&= f_1(hg) +c f_2(hg)\\
                         &= \rho(h,f_1(g)) + c \rho(h,f_2(g))\\
@@ -241,12 +243,7 @@
                         Then each function \(f_{i,j}\) is in \(W_\rho\).
                     </div>
                     <emph>Proof.</emph>
-                    Fix \(g \in G\) and \(h \in H\). Then,
-                    \[f_{i,j}(y) = \begin{cases}
-                        \rho(h,v_j) &\colon \text{If } y=hx_i\\
-                        0 &\colon \text{If } y \notin Hx_i
-                    \end{cases}\]
-                    Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
+                    Fix \(g \in G\) and \(h \in H\). Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
                     \[f_{i,j}(hg)=0=f_{i,j}(g)=\rho(h,f_{i,j}(g)).\]
                     Now suppose \(g \in Hx_i\). Then there is \(h_1 \in H\) such that \(g=h_1x_i\). Also, \(hg =h h_1 x_i\). So, from the definition of \(f_{i,j}\), we get
                     \[f_{i,j}(hg)=\rho(hh_1,v_j)=\rho(h,\rho(h_1,v_j))=\rho(h,f_{i,j}(g)).\]
@@ -299,9 +296,9 @@
                 
                 <div class="h2-1" id="first-attempts-1">First Attempts</div>
                 <p>
-                    Well, given a group \(G\) and a field \(F\), the most obvious representation is the trival representation \(\sigma \colon G \to GL(F)\) where
+                    Well, given a group \(G\) and a field \(F\), the most obvious representation is the trival representation \(\sigma \colon G \to GL(1,F)\) where
                     \[\sigma(g) = 1_F\] 
-                    for all \(g \in G, f \in F\).</p>
+                    for all \(g \in G\).</p>
                 <p>
                     Does this representation unlock the chest? It is perhaps optimistic to expect a trivial solution. We have not even used all of the information we were given, after all. But we did use the field \(F\), so it's a good first guess.
                     <br>
@@ -356,7 +353,7 @@
                     \[\sigma_1(e)(f)(x)=f(xe)=f(x), \text{ } \forall x \in G.\]
                     for all \(f \in W\). This shows \(\sigma_1(e)(f)=f\) for all \(f \in W\). Also, for any \(f \in W\) and \(a,b \in G\), we have
                     \[\sigma_1(ab)(f)(x)=f(xab)=\sigma_1(b)(f)(xa)= \sigma_1(a)(\sigma_1(b)(f))(x), \text{ } \forall x \in G.\]
-                    This shows \(\sigma_1(ab) = \sigma_1(a) \circ \sigma_1(b)\). Also, since \(e=a a^{-1}\), the previous two facts imply \(\sigma(a) \in GL(W)\) for all \(a \in G\).
+                    This shows \(\sigma_1(ab) = \sigma_1(a) \circ \sigma_1(b)\). Also, since \(e=a a^{-1}\), the previous two facts imply \(\sigma_1(a) \in GL(W)\) for all \(a \in G\).
                     <br> 
                     So \(\sigma_1\) is indeed a group homomorphism \(G \to GL(W)\). 
                     <br>
@@ -427,13 +424,13 @@
                     \[\Ind{G}{H}{\rho}(g)(f)(hx)= \rho(h)(f(xg)), \text{ } \forall x \in G\]
                     for all \(g \in G\), \(f \in W\), \(h \in H\).
                     <br>
-                    This is equivalent to imposing on \(f\):
+                    Since \(\Ind{G}{H}{\rho}(g)(f)(x)= f(xg)\) by definition, this is equivalent to imposing on \(f\):
                     \[f(hg)=\rho(h)(f(g))\]
                     for all \(g\in G\), \(h \in H\).
                     <br>
                     As before, we do not expect every \(f \in W\) to have this property, but maybe the set of such functions is a subspace. We define
                     \[W_\rho \coloneqq \{f \in W \mid f(hg)=\rho(h)(f(g)) \text{ for all } h \in H \text{, } g \in G\}.\]
-                    Clearly \(0 \in V_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in \mathbb{C}\) and \(h \in H, g \in G\), we get:
+                    Clearly \(0 \in W_\rho\). Also, for any two \(f_1,f_2 \in W_\rho\), \(c \in F\) and \(h \in H, g \in G\), we get:
                     \[\begin{align*}
                         (f_1+cf_2)(hg)&= f_1(hg) +c f_2(hg)\\
                         &= \rho(h)(f_1(g)) + c \rho(h)(f_2(g))\\
@@ -452,12 +449,7 @@
                         Then each function \(f_{i,j}\) is in \(W_\rho\).
                     </div>
                     <emph>Proof.</emph>
-                    Fix \(g \in G\) and \(h \in H\). Then,
-                    \[f_{i,j}(y) = \begin{cases}
-                        \rho(h)(v_j) &\colon \text{If } y=hx_i\\
-                        0 &\colon \text{If } y \notin Hx_i
-                    \end{cases}\]
-                    Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
+                    Fix \(g \in G\) and \(h \in H\). Suppose \(g \notin Hx_i\). Then \(hg \notin Hx_i\). So
                     \[f_{i,j}(hg)=0=f_{i,j}(g)=\rho(h)(f_{i,j}(g)).\]
                     Now suppose \(g \in Hx_i\). Then there is \(h_1 \in H\) such that \(g=h_1x_i\). Also, \(hg =h h_1 x_i\). So, from the definition of \(f_{i,j}\), we get
                     \[f_{i,j}(hg)=\rho(hh_1)(v_j)=\rho(h)\circ\rho(h_1)(v_j)=\rho(h)(f_{i,j}(g)).\]
@@ -522,7 +514,7 @@
                     <br>
                     Thus, we may define modules over \(F[H]\) and we give you one such \(F[H]\)-module \(V\) (an \(F\)-representation of \(H\)).
                     <br>
-                    An \(F\)-representation rof \(G\) (that uses \(V\) in some manner) you shall need to open this chest!</p>
+                    An \(F\)-representation of \(G\) (that uses \(V\) in some manner) you shall need to open this chest!</p>
                 </div>
                 <p>We accept this task and take the chest with us to try our hand at opening it.</p>
 
@@ -531,11 +523,11 @@
                     An \(F\)-representation of \(G\) is an \(F[G]\) module where \(F[G]\) is a ring with identity defined in the same fashion as \(F[H]\).
                     \[F[G] \coloneqq \{ f \colon G \to F\}\]
                     and is endowed with componentwise addition
-                    \[(f_1+f_2) (h) = f_1(h)+f_2(h), \text{ } \forall h \in G, f_1,f_2 \in F[G]\]
+                    \[(f_1+f_2) (g) = f_1(g)+f_2(g), \text{ } \forall g \in G, f_1,f_2 \in F[G]\]
                     and multiplication
-                    \[(f_1 \cdot f_2)(h) = \sum_{x\in G} f_1(x) \cdot f_2(x^{-1}h), \text{ } \forall h \in G, f_1, f_2 \in F[G].\]
-                    These operations make it a ring with the identity \(I (h) = \begin{cases}
-                    1_F &\colon h=e\\
+                    \[(f_1 \cdot f_2)(g) = \sum_{x\in G} f_1(x) \cdot f_2(x^{-1}g), \text{ } \forall g \in G, f_1, f_2 \in F[G].\]
+                    These operations make it a ring with the identity \(I (g) = \begin{cases}
+                    1_F &\colon g=e\\
                     0 &\colon \text{Otherwise}
                     \end{cases}\)
                     <br>
@@ -560,12 +552,12 @@
                 </p>
                 <p>
                     Let \(K\) be the free abelian group on \(F[G] \times V\) given by
-                    \[K= \{ z_1 (f_1,v_1) + z_2 (f_2,v_2) + \dots + z_n(f_n,v_n) \mid z_i \in \mathbb{Z}, f_i \in F[G], v_i \in V \text{ } \forall i \in {1,2,\dots ,n}, \text{ and } n\in \mathbb{N}_{>0}\}.\]
-                    Define a subset of \(Q\) of \(K\) by
+                    \[K= \{ z_1 (f_1,v_1) + z_2 (f_2,v_2) + \dots + z_n(f_n,v_n) \mid z_i \in \mathbb{Z}, f_i \in F[G], v_i \in V \text{ } \forall i \in {1,2,\dots ,n}, \text{ and } n\in \mathbb{N}_{\geq 0}\}.\]
+                    Define a subset \(Q\) of \(K\) by
                     \[Q= \left\{\begin{align*}
                     (f_1+f_2,v_1)-(f_1,v_1)-(f_2,v_1),\\
                     (f_1,v_1 +v_2)-(f_1,v_1)-(f_1,v_2),\\
-                    (f_1 g_1, n_1)-(f_1,g_1 n_1)
+                    (f_1 g_1, v_1)-(f_1,g_1 v_1)
                     \end{align*} \middle\vert \text{For all } f_1,f_2 \in F[G], g_1 \in F[H] \text{ and } v_1,v_2 \in V\right\}\]
                     Let \(L =\langle Q \rangle\) be the subgroup of \(K\) generated by \(Q\). Since \(K\) is abelian, \(L\) is a normal subgroup and the quotient group \(K/L\) is well defined.
                     <br>
@@ -574,13 +566,13 @@
                     \label{simpleTensor}
                     (f_1+f_2) \otimes (v_1) &= f_1 \otimes v_1 + f_2 \otimes v_1, \\
                     (f_1) \otimes (v_1 +v_2) &= f_1 \otimes v_1 + f_1 \otimes v_2, \text{ and}\\
-                    (f_1 g_1) \otimes (n_1) &= (f_1)\otimes (g_1 n_1)
+                    (f_1 g_1) \otimes (v_1) &= (f_1)\otimes (g_1 v_1)
                     \end{align}\]
                     We may now define multiplication on \(F[G] \otimes_{F[H]} V\) by an element in \(F[G]\) as
-                    \[ f (\sum_{i \in A} (f_i,v_i)) = \sum_{i \in A} (f \cdot f_i, v_i)\]
-                    for all \(f \in F[G]\) and \(\sum_{i \in A} (f_i,v_i) \in F[G] \otimes_{F[H]} V\) where \(A\) is a finite index set.
+                    \[ f (\sum_{i \in A} f_i \otimes v_i) = \sum_{i \in A} (f \cdot f_i) \otimes v_i\]
+                    for all \(f \in F[G]\) and \(\sum_{i \in A} f_i \otimes v_i \in F[G] \otimes_{F[H]} V\) where \(A\) is a finite index set.
                     <br>
-                    It now follows from the relations in (1), (2) and (3) that the above multiplication equips \(F[G] \otimes_{F[H]} V\) with an \(F[G]\)-module structure.
+                    It turns out that this is well defined. Moreover, it follows from the relations in (1), (2) and (3) that the above multiplication equips \(F[G] \otimes_{F[H]} V\) with an \(F[G]\)-module structure.
                 </p>
                 <p>
                     We have an \(F[G]\)-module in our hands, just what we wanted. We call the tensor product \(F[G] \otimes_{F[H]} V\) the induced representation \(\Ind{G}{H}{V}\). Is this the \(F\)-representation of \(G\) that unlocks the chest? It certainly uses the \(F[H]\) module \(V\). We try this. And, yay, this does open the chest! :)
