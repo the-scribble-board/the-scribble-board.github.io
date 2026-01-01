@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Carnival of Mathematics 247 - The Scribble Board</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BJEGFSMT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y0BJEGFSMT');
+    </script>
+    <script defer src="../mathjax-config.js"></script>
+    <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <script src="navigation.js"></script>
+    <div class="progress-bar"></div>
+    <div class="topnav" id="myTopnav">
+        <a href="index.html">Home</a>
+        <a href="fun.html">Fun proofs</a>
+        <a href="exposition.html">Exposition</a>
+        <a href="carnival247.html" class="active">Carnival of Mathematics 247</a>
+        <a href="about.html">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" onclick="switchThemes()">☀️ Light</button>
+    <div class="main-content">
+        <div class="container">
+            <h1>Carnival of Mathematics 247</h1>
+            <p>
+              It is a new month, and with it comes a new Carnival! Before we enjoy the carnival in its entirety, we shall stake out the surroundings a bit.
+              What is this number, 247?
+              <br>
+              It is a Harshad number, which means it is divisible by the sum of its digits. Indeed, that is so, for \(247=19 \times 13\). Yet another fun fact, 'harshad' means 'joy giver' in Sanskrit.
+              An appropriate number for a carnival, one might suppose. Here is an interesting <a href="https://www.youtube.com/watch?v=dgwevhEykWQ">Numberphile video on Harshad numbers featuring Tony Padilla</a>.
+              <br>
+              This is also the start of a new year, 2026, in the Gregorian calendar. A look at the OEIS tells us that there is a connection between 247 and 2026.
+              Let \(a(n)\) be the number of ways one can write \(n\) as an ordered sum of 1s, 2s, 3s and 4s such that no 2 precedes any 1 and no 3 precedes any 1 or 2.
+              Now 247 factors as: \(247=13\times 19\) and  we have \(247 = a(13)\), \(2026 = a(19)\). More details on the sequence of \(a(i)\)'s are here: <a href="https://oeis.org/A123569">A123569</a>.
+            </p>
+            <p>
+              It is now time to explore the Carnival's mainstays. Hopefully this carnival is also a harshad, like 247! :)
+              <h2>Formalisation of Erdős Problems</h2>
+              A blog post by <a href="https://borisalexeev.com/">Boris Alexeev</a> on the value of collaboration and AI in formalisation, with particular focus on Erdős problems. This post provides a brief update on the recent developments in this field.
+              Find it here: <a href="https://xenaproject.wordpress.com/2025/12/05/formalization-of-erdos-problems/">Post on the Xena Project</a>.
+              <h2>The Equational Theories Project</h2>
+              Launched by Terence Tao in September 2024 (<a href="https://terrytao.wordpress.com/2024/09/25/a-pilot-project-in-universal-algebra-to-explore-new-ways-to-collaborate-and-use-machine-assistance/">Initial post</a> and an <a href="https://terrytao.wordpress.com/2024/10/12/the-equational-theories-project-a-brief-tour/">update</a>, this was featured in <a href="https://www.jeremykun.com/2022/11/01/carnival-of-mathematics-233/">Carnival 233</a>), he now reports on its completion: <a href="https://terrytao.wordpress.com/2025/12/09/the-equational-theories-project-advancing-collaborative-mathematical-research-at-scale/">Post on his blog</a>.
+              <h2>Notes on Probability</h2>
+              Brian Sutin from Skewray Research has made available their notes on probability theory here: <a href="https://www.skewray.com/articles/notes-on-probability">Skewray Research</a>. This builds upon an <a href="https://www.skewray.com/articles/randomness-is-an-inverse-stochastic-process">earlier post on clowns</a> which featured in <a href="https://tommaths.blogspot.com/2025/12/carnival-of-mathematics-246.html">Carnival 246</a>, but can be read in isolation.
+              <h2>Winning Lotteries Twice</h2>
+              While it is unlikely for a specific person to win the lottery twice (about 1 in 24 trillion!), this article is explains why it is not as unlikely for the lottery to be won twice (by a non-specific somebody). Read it here: <a href="https://kityates.substack.com/p/just-how-unlikely-is-it-to-win-the">Kit Yates' substack post</a>.
+              <h2>The Rado Graph</h2>
+              The Rado graph is a graph with countably infinite edges that contains an isomorphic copy of any arbitrary finite graph. A bold claim! Matt Parker has published a video that walks us through proving this: <a href="https://www.youtube.com/watch?v=TNWl-0rle4A">You can prove every possible graph is just a sub-graph.</a>
+              <h2>Exploitation and Game Theory</h2>
+              Rodrigo Treviño has published a note in The Mathematical Intelligencer recounting their experience with an exploitative seller, and a way to retain the upper hand: <a href="https://doi.org/10.1007/s00283-025-10457-3">How to Not Let Them Get Away With It: A Note on the Mathematics of Infinite Exploitation. Math Intelligencer (2025) (Open access)</a>.
+              <h2>Christmas Cracker Calculator</h2>
+              Laura has published an article on their blog, <em>Letters and Words</em>, about how a set of magic trick cards was a binary calculator in disguise! Here's the link to her article: <a href="https://lettersandwords.co.uk/2025/12/31/christmas-cracker-calculator/">Christmas Cracker Calculator</a>.
+              <h2>Highlights of 2025</h2>
+              The team at <a href="https://mathateca.nz/">Mathateca</a> have shared a list of maths stuff that they loved from 2025 <a href="https://mathateca.nz/Blog/Mathatecas-Best-of-the-Web-2025/">here.</a>
+              <br>
+              Quanta magazine has published their <a href="https://www.quantamagazine.org/the-year-in-mathematics-20251218/">Year in Mathematics</a> article, part of the 2025 in Review series.
+            </p>
+            <p>
+                That's it for this carnival, I hope it was fun. The fun doesn't end here though. Carnival 248 will be hosted by Laura Walsh, and you can submit entries <a href="https://docs.google.com/spreadsheet/viewform?pli=1&formkey=dC1IREpjV1lVRE1xcml2bXJDUzhqTXc6MQ#gid=0">here.</a>
+            </p>
+            <p>
+                My thanks go to Robin Whitty, Skewray, Mathateca and Laura Walsh who submitted entries for this Carnival of Mathematics. I am also grateful to Ioanna, Katie and the team at The Aperiodical for organising the Carnivals.
+            </p>
+        </div>
+    </div>
+    <footer>
+        <a rel="me" href="https://mathstodon.xyz/@wandering_student">I'm on Mastodon!</a>
+        <p>Want to be notified of new posts? Sign up <a href="https://forms.gle/WzB1BgRED3sANbUv6">here</a>!</p>
+    </footer>
+</body>
+</html>

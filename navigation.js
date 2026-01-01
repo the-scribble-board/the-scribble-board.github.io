@@ -3,20 +3,28 @@ window.addEventListener('scroll', () => {
     const links = document.querySelectorAll('.navigation a');
     const pageProgressBar = document.querySelector(".progress-bar")
 
-    if (typeof(anchors) != 'undefined' && anchors != null && typeof(links) != 'undefined' && links != null) {
-        let scrollTop = window.scrollY;
-    
-        // highlight the last scrolled-to: set everything inactive first
-        links.forEach((link, index) => {
-            link.classList.remove('highlight');
-        });
-    
-        // then iterate backwards, on the first match highlight it and break
-        for (var i = anchors.length-1; i >= 0; i--) {
-            if (scrollTop > anchors[i].offsetTop-250) {
-                links[i].classList.add('highlight');
-                break;
+    try {
+        if (typeof(anchors) != 'undefined' && anchors != null && typeof(links) != 'undefined' && links != null) {
+            let scrollTop = window.scrollY;
+        
+            // highlight the last scrolled-to: set everything inactive first
+            links.forEach((link, index) => {
+                link.classList.remove('highlight');
+            });
+        
+            // then iterate backwards, on the first match highlight it and break
+            for (var i = anchors.length-1; i >= 0; i--) {
+                if (scrollTop > anchors[i].offsetTop-250) {
+                    links[i].classList.add('highlight');
+                    break;
+                }
             }
+        }
+    } catch (e) {
+        if (e instanceof TypeError) {
+            // do nothing
+        } else {
+          throw e;
         }
     }
 
