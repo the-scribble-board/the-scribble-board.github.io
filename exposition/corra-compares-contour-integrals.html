@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="fediverse:creator" content="@wandering_student@mathstodon.xyz">
+    <link rel="stylesheet" href="../styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>The Scribble Board - Cauchy-Goursat</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0BJEGFSMT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y0BJEGFSMT');
+    </script>
+</head>
+<body>
+    <script src="../navigation.js"></script>
+    <div class="progress-bar" > </div>
+    <div class="topnav" id="myTopnav">
+        <a href="../index.html">Home</a>
+        <a href="../fun.html">Fun proofs</a>
+        <a href="../exposition.html" class="active">Exposition</a>
+        <a href="carnival247.html">Carnival of Mathematics 247</a>
+        <a href="../about.html">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" onclick="switchThemes()">☀️ Light</button>
+    <div class="main-content">
+        <div class="container">
+            <h1>Corra Compares Contour Integrals, A proof of the Cauchy-Goursat theorem</h1>
+            <p>This articles assumes familiarity with the concepts of complex functions, their continuity, differentiability and contour integration at an early undergraduate level.  It is aimed at a student taking an introductory course on complex analysis. It was my entry for SoMEπ, held in 2024, and was ranked 21 of 44 non video entries.
+            </p>
+            <iframe src="https://drive.google.com/file/d/1omAuZtLxYCCbfNx1HL3iE6DM_9IqqlGC/preview" width="100%" height="1380" allow="autoplay"></iframe>
+            <h3>Corrections:</h3>
+            <p>
+                <ul>
+                    <li>The energy function defined in (2) on page 1 should be a function from the complex plane to the complex plane, and not from the integers to the integers. Thanks anonymous SoME reviewer for pointing out the mistake.
+                    </li>
+                    <li>Also on page 1, (3) initially had an error which implied the contour integral is a real number. The contour integral is a complex number and the error is now fixed. Thanks anonymous SoME reviewer for pointing this out.
+                    </li>
+                    <li>The extension of the proof to arbitrary simple closed contours does not work as presented here as I have not shown that despite the contribution of each partial square becoming smaller, the sum of all the contributions is still not significant. Thanks anonymous Redditor for highlighting this error.
+                    </li>
+                </ul>
+                Found a mistake? <a href="mailto:mailthescribbleboard@gmail.com">Let me know</a>!</p>
+            <h3>Acknowledgements:</h3>
+            <p>I was first exposed to this theorem in my complex analysis course. The proof for triangles is based on the discussions in the classes.
+            </p>
+            <p>The extension to arbitrary simple closed contours is my original attempt.
+            </p>
+        </div>
+    </div>
+    <footer>
+        <a rel="me" href="https://mathstodon.xyz/@wandering_student">I'm on Mastodon!</a>
+    </footer>
+</body>
+</html>
